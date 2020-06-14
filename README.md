@@ -1,9 +1,6 @@
 ﻿# "슬기로운 공부생활" 서버 파트 저장소
 
-## Table of Contents
+## Directories
 
-1. How to use Docker
-
-## Specialy Issues
-
-- 
+- docker: 도커 기반 서버 환경구축 데이터
+- server: Python Django App 소스
