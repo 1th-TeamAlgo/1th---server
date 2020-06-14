@@ -90,4 +90,4 @@ ADD entrypoint.sh /home/apps/entrypoint.sh
 
 EXPOSE 80 3306
 
-ENTRYPOINT ["/homeapps/entrypoint.sh"]
+ENTRYPOINT ["/home/apps/entrypoint.sh"]
