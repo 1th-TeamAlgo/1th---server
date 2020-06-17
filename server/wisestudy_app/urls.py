@@ -1,11 +1,11 @@
 from django.urls import path, include
-from studyapp.category import views as category_views #카테고리
-from studyapp.user import views as user_views #유저
-from studyapp.user_category import views as user_category_views #유저 카테고리
-from studyapp.study import views as study_views #스터디
-from studyapp.study_member import views as study_member_views #스터디원
-from studyapp.activity_picture import views as activity_picture_views #활동사진
-from studyapp.schedule import views as schedule_views #일정
+from wisestudy_app.category import views as category_views #카테고리
+from wisestudy_app.user import views as user_views #유저
+from wisestudy_app.user_category import views as user_category_views #유저 카테고리
+from wisestudy_app.study import views as study_views #스터디
+from wisestudy_app.study_member import views as study_member_views #스터디원
+from wisestudy_app.activity_picture import views as activity_picture_views #활동사진
+from wisestudy_app.schedule import views as schedule_views #일정
 
 #카테고리
 category_patterns = [
