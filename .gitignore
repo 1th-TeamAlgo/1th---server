@@ -11,3 +11,9 @@ local_settings.py
 db.sqlite3
 
 media
+
+# intellij ignore
+.idea
+
+# VS code ignore
+.vscode
