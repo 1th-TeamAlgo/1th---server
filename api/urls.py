@@ -18,4 +18,5 @@ urlpatterns = [
     path('users/<int:pk>', user_views.UserDetail.as_view()),
     path('categorys', category_views.CategoryList.as_view()),
     path('categorys/<int:pk>', category_views.CategoryDetail.as_view()),
+    path('study_members/',study_member_views.StudyMemberList.as_view()),
 ]
