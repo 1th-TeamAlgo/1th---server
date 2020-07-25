@@ -1,52 +1,30 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 from .models import ActivityPicture
 from .serializers import ActivityPictureSerializer
-from rest_framework.parsers import JSONParser
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
-#전체조회
-@csrf_exempt
-def getAllOrCreateActivityPicture(request):
-    if request.method == 'GET':
-        query_set = ActivityPicture.objects.all()
-        print(query_set)
-        serializer = ActivityPictureSerializer(query_set, many=True)
-        return JsonResponse(serializer.data, safe=False,  json_dumps_params={'ensure_ascii': False})
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = ActivityPictureSerializer(data=data)
+class APList(APIView):
+    def get(self, request):
+        ap = ActivityPicture.objects.all()
+        serializer = ActivityPictureSerializer(ap, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ActivityPictureSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
 
-#단건조회
-@csrf_exempt
-def getActivityPicture(request, id):
+class APDetail(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(ActivityPicture, pk=pk)
 
-    activity_picture = ActivityPicture.objects.get(activity_picture_id=id)
-
-    if request.method == 'GET':
-        serialized_data = ActivityPictureSerializer(activity_picture)
-        return JsonResponse(serialized_data.data, safe=False, json_dumps_params={'ensure_ascii': False})
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer_data = ActivityPictureSerializer(activity_picture,data=data)
-        if serializer_data.is_valid():
-            serializer_data.save()
-            return JsonResponse(serializer_data.data, status=201)
-        return JsonResponse(serializer_data.errors, status=400)
-
-    elif request.method == 'DELETE':
-        activity_picture.delete()
-        return HttpResponse(status=204)
-
-
-
-
-
+    def get(self, request, pk):
+        ap = self.get_object(pk)
+        serializer = ActivityPictureSerializer(ap)
+        return Response(serializer.data, status=status.HTTP_200_OK)
