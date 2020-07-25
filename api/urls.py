@@ -23,4 +23,6 @@ urlpatterns = [
     path('study_members/', study_member_views.StudyMemberList.as_view()),
     path('schedules/',schedule_views.ScheduleList.as_view()),
     path('schedules/<int:pk>',schedule_views.ScheduleDetail.as_view()),
+    path('aps/',activity_picture_views.APList.as_view()),
+    path('aps/<int:pk>',activity_picture_views.APDetail.as_view()),
 ]
