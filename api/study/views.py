@@ -1,49 +1,30 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 from .models import Study
 from .serializers import StudySerializer
-from rest_framework.parsers import JSONParser
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
-# Create your views here.
+class StudyList(APIView):
+    def get(self, request):
+        study = Study.objects.all()
+        serializer = StudySerializer(study, many=True)
+        return Response(serializer.data)
 
-@csrf_exempt
-def getAllOrCreateStudy(request):
-    if request.method == 'GET':
-        query_set = Study.objects.all()
-        print(query_set)
-        serializer = StudySerializer(query_set, many = True)
-        return JsonResponse(serializer.data, safe=False,  json_dumps_params={'ensure_ascii': False})
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = StudySerializer(data=data)
+    def post(self, request):
+        serializer = StudySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
 
-#단건조회
-@csrf_exempt
-def getStudy(request, id):
+class StudyDetail(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(Study, pk=pk)
 
-    study = Study.objects.get(study_id=id)
-
-    if request.method == 'GET':
-        serialized_data = StudySerializer(study)
-        return JsonResponse(serialized_data.data, safe=False, json_dumps_params={'ensure_ascii': False})
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer_data = StudySerializer(study,data=data)
-        if serializer_data.is_valid():
-            serializer_data.save()
-            return JsonResponse(serializer_data.data, status=201)
-        return JsonResponse(serializer_data.errors, status=400)
-
-    elif request.method == 'DELETE':
-        study.delete()
-        return HttpResponse(status=204)
+    def get(self, request, pk):
+        study_member = self.get_object(pk)
+        serializer = StudySerializer(study_member)
+        return Response(serializer.data, status=status.HTTP_200_OK)
