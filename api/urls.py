@@ -1,10 +1,10 @@
 from django.urls import path, include
-from wisestudy_app.category import views as category_views  # 카테고리
-from wisestudy_app.user import views as user_views  # 유저
-from wisestudy_app.study import views as study_views  # 스터디
-from wisestudy_app.study_member import views as study_member_views  # 스터디원
-from wisestudy_app.activity_picture import views as activity_picture_views  # 활동사진
-from wisestudy_app.schedule import views as schedule_views  # 일정
+from .category import views as category_views  # 카테고리
+from .user import views as user_views  # 유저
+from .study import views as study_views  # 스터디
+from .study_member import views as study_member_views  # 스터디원
+from .activity_picture import views as activity_picture_views  # 활동사진
+from .schedule import views as schedule_views  # 일정
 
 urlpatterns = [
     # path('/category', include(category_patterns)),

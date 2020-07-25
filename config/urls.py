@@ -8,7 +8,7 @@ from drf_yasg import openapi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('wisestudy_app.urls')),
+    path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
