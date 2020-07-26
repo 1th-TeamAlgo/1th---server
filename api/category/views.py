@@ -28,6 +28,7 @@ class CategoryDetail(APIView):
         category = self.get_object(pk)
         serializer = CategorySerializer(category)
 
+        print(len(category.study_set.all()))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):

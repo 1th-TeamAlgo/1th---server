@@ -48,25 +48,3 @@ class UserDetail(APIView):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_202_ACCEPTED)
-
-# #단건조회
-# @csrf_exempt
-# def getUser(request, id):
-#
-#     user = User.objects.get(user_id=id)
-#
-#     if request.method == 'GET':
-#         serialized_data = UserSerializer(user)
-#         return JsonResponse(serialized_data.data, safe=False, json_dumps_params={'ensure_ascii': False})
-#
-#     elif request.method == 'PUT':
-#         data = JSONParser().parse(request)
-#         serializer_data = UserSerializer(user,data=data)
-#         if serializer_data.is_valid():
-#             serializer_data.save()
-#             return JsonResponse(serializer_data.data, status=201)
-#         return JsonResponse(serializer_data.errors, status=400)
-#
-#     elif request.method == 'DELETE':
-#         user.delete()
-#         return HttpResponse(status=204)
