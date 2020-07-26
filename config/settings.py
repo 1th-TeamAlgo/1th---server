@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     'rest_framework',
     ## app
     'api',
-    'kakao_auth',
 
     ##문서 자동화
     'drf_yasg',

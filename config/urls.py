@@ -10,7 +10,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('kakao-auth/', include('kakao_auth.urls')),
 ]
 
 # swagger 정보 설정, 관련 엔드포인트 추가
