@@ -2,7 +2,7 @@ from django.db import models
 from ..study.models import Study
 
 
-#일정
+# 일정
 class Schedule(models.Model):
     schedule_id = models.IntegerField(primary_key=True)
     study = models.ForeignKey(Study, on_delete=models.CASCADE)
@@ -14,6 +14,3 @@ class Schedule(models.Model):
 
     def __str__(self):
         return self.title
-
-
-

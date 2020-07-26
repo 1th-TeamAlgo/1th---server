@@ -1,9 +1,9 @@
 from django.db import models
 
-#사용자
+
+# 사용자
 class User(models.Model):
-    user_id = models.IntegerField(primary_key=True, default= 1)
-    #category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user_id = models.IntegerField(primary_key=True, default=1)
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
