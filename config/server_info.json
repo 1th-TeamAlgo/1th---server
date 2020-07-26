@@ -1,0 +1,16 @@
+{
+    "production" : {
+        "SECRET_KEY" : "'78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$'",
+        "DATABASES" : {
+            "default": {
+                "ENGINE": "django.db.backends.mysql",
+                "NAME": "wisedb",
+                "USER": "root",
+                "PASSWORD": "schwisestudy",
+                "HOST": "wisedb.cinqw7ouyrxc.ap-northeast-2.rds.amazonaws.com",
+                "PORT": "3306"
+            }
+        }
+    }
+
+}
