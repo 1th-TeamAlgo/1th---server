@@ -1,18 +1,18 @@
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+# ### Local ###
+# SERET_KEY = '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$'
+# DEBUG = True
+# ALLOWED_HOSTS = []
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+### heroku ###
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$')
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -32,6 +32,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    ### Heorku ###
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -118,3 +121,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
