@@ -1,11 +1,11 @@
 # 실서버 설정
 # import DATABASES as DATABASES
 
-from config.util import get_server_info_value
+# from config.util import get_server_info_value
 
 from .base import *
 
-SETTING_PRD_DIC = get_server_info_value("production")
+# SETTING_PRD_DIC = get_server_info_value("production")
 
 ### heroku ###
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$')
@@ -17,18 +17,18 @@ MIDDLEWARE += [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 DATABASES = {
-    'default': SETTING_PRD_DIC['DATABASES']["default"]
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'wisedb',
-    #     'USER': 'root',
-    #     'PASSWORD': 'schwisestudy',
-    #     'HOST': 'wisedb.cinqw7ouyrxc.ap-northeast-2.rds.amazonaws.com',
-    #     'PORT': 3306,
-    #     # 'OPTIONS': {
-    #     #     'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
-    #     # }
-    # }
+    # 'default': SETTING_PRD_DIC['DATABASES']["default"]
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wisedb',
+        'USER': 'root',
+        'PASSWORD': 'schwisestudy',
+        'HOST': 'wisedb.cinqw7ouyrxc.ap-northeast-2.rds.amazonaws.com',
+        'PORT': 3306,
+        # 'OPTIONS': {
+        #     'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+        # }
+    }
 }
 
 WSGI_APPLICATION = 'config.wsgi.application'
