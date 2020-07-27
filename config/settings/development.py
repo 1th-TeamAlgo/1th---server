@@ -4,7 +4,7 @@ import os
 from.base import *
 
 #dev SECRET KEY 노출되어도  무방, 실서버와는 다름
-SERET_KEY = '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$'
+SECRET_KEY = '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$'
 DEBUG = True
 ALLOWED_HOSTS = []
 
