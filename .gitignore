@@ -6,8 +6,8 @@
 
 __pycache__/
 
-local_settings.py
 
+wisestudy_venv
 db.sqlite3
 
 media
