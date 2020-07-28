@@ -12,8 +12,8 @@ urlpatterns = [
     path('users/<int:pk>', user_views.UserDetail.as_view()),
 
     ## categorys ##
-    path('categorys', category_views.CategoryList.as_view()),
-    path('categorys/<int:pk>', category_views.CategoryDetail.as_view()),
+    path('categories', category_views.CategoryList.as_view()),
+    path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
 
     ## studys ##
     path('studys/', study_views.StudyList.as_view()),
