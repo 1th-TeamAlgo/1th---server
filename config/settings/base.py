@@ -1,9 +1,8 @@
-#공통 설정
+# 공통 설정
 import os
 
 ROOT_URLCONF = 'config.urls'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,4 +75,3 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-

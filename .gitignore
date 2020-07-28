@@ -1,19 +1,13 @@
 *. log
-
 *.pot
-
 *.pyc
-
 __pycache__/
-
-
 wisestudy_venv
 db.sqlite3
-
 media
-
+development.py
+production.py
 # intellij ignore
 .idea
-
 # VS code ignore
 .vscode
