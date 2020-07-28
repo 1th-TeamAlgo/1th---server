@@ -11,13 +11,13 @@ class CategoryList(APIView):
         category = Category.objects.all()
         serializer = CategorySerializer(category, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = CategorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #
+    # def post(self, request):
+    #     serializer = CategorySerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryDetail(APIView):
@@ -28,18 +28,17 @@ class CategoryDetail(APIView):
         category = self.get_object(pk)
         serializer = CategorySerializer(category)
 
-        print(len(category.study_set.all()))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request, pk):
-        category = self.get_object(pk)
-        serializer = CategorySerializer(category, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, pk):
-        category = self.get_object(pk)
-        category.delete()
-        return Response(status=status.HTTP_202_ACCEPTED)
+    # def put(self, request, pk):
+    #     category = self.get_object(pk)
+    #     serializer = CategorySerializer(category, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+    #
+    # def delete(self, pk):
+    #     category = self.get_object(pk)
+    #     category.delete()
+    #     return Response(status=status.HTTP_202_ACCEPTED)
