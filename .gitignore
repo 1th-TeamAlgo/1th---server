@@ -5,8 +5,8 @@ __pycache__/
 wisestudy_venv
 db.sqlite3
 media
-development.py
-production.py
+#secret.py
+
 # intellij ignore
 .idea
 # VS code ignore

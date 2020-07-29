@@ -1,8 +1,10 @@
 # 실서버 설정
+from . import secret
 from .base import *
 
 ### heroku ###
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$')
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '78si$+oqq57vf)*eykl=-@40359g-uuz)-yh+4dja!^!-9^(h$')
+SECRET_KEY = secret.SECRET_KEY
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 ALLOWED_HOSTS = ['*']
 
@@ -23,7 +25,7 @@ DATABASES = {
     }
 }
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.production.application'
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
