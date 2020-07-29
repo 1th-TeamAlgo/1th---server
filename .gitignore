@@ -5,7 +5,7 @@ __pycache__/
 wisestudy_venv
 db.sqlite3
 media
-#secret.py
+secret.py
 
 # intellij ignore
 .idea
