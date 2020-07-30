@@ -3,12 +3,11 @@ import os
 import sys
 
 if __name__ == '__main__':
-    profile = os.environ.get("DJANGO_PROFILE")
-
-    if profile == '':
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
-    else
+    if "DJANGO_PROFILE" in os.environ:
+        profile = os.environ.get("DJANGO_PROFILE")
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings." + profile)
+    else
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
         
     try:
         from django.core.management import execute_from_command_line
