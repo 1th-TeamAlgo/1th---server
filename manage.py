@@ -6,7 +6,7 @@ if __name__ == '__main__':
     if "DJANGO_PROFILE" in os.environ:
         profile = os.environ.get("DJANGO_PROFILE")
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings." + profile)
-    else
+    else:
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
         
     try:
