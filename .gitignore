@@ -1,19 +1,13 @@
 *. log
-
 *.pot
-
 *.pyc
-
 __pycache__/
-
-local_settings.py
-
+wisestudy_venv
 db.sqlite3
-
 media
+secret.py
 
 # intellij ignore
 .idea
-
 # VS code ignore
 .vscode
