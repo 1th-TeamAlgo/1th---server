@@ -4,8 +4,12 @@ import sys
 
 if __name__ == '__main__':
     profile = os.environ.get("DJANGO_PROFILE")
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings." + profile)
-    # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.")
+
+    if profile == '':
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
+    else
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings." + profile)
+        
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
