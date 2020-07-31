@@ -55,7 +55,7 @@ class ScheduleList(APIView):
 class ScheduleDetail(APIView):
     @swagger_auto_schema(
         responses={200: ScheduleSerializer(many=True)},
-        tags=['schedule'],
+        tags=['schedules'],
         operation_description=
         """
         특정 id를 가진 스케줄 조회 API
