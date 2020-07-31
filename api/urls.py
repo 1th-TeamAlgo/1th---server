@@ -11,22 +11,23 @@ urlpatterns = [
     path('users', user_views.UserList.as_view()),
     path('users/<int:pk>', user_views.UserDetail.as_view()),
 
-    ## categorys ##
+    # categorys ##
     path('categories', category_views.CategoryList.as_view()),
     path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
 
-    ## studys ##
-    path('studys/', study_views.StudyList.as_view()),
-    path('studys/<int:pk>', study_views.StudyDetail.as_view()),
+    # studys ##
+    path('studies', study_views.StudyList.as_view()),
+    path('studies/<int:pk>', study_views.StudyDetail.as_view()),
 
     ## study_memebers ##
-    path('study_members/', study_member_views.StudyMemberList.as_view()),
+    path('study_members', study_member_views.StudyMemberList.as_view()),
+    path('study_members/<int:pk>', study_member_views.StudyMemeberDetail.as_view()),
 
     ## schedules ##
-    path('schedules/', schedule_views.ScheduleList.as_view()),
+    path('schedules', schedule_views.ScheduleList.as_view()),
     path('schedules/<int:pk>', schedule_views.ScheduleDetail.as_view()),
 
     ## activity_pictures ##
-    path('aps/', activity_picture_views.APList.as_view()),
+    path('aps', activity_picture_views.APList.as_view()),
     path('aps/<int:pk>', activity_picture_views.APDetail.as_view()),
 ]
