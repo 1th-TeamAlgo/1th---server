@@ -16,11 +16,8 @@ urlpatterns = [
     path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
 
     ## studys ##
-    path('studys/', study_views.StudyList.as_view()),
-    path('studys/<int:pk>', study_views.StudyDetail.as_view()),
-
-    ## study_memebers ##
-    path('study_members/', study_member_views.StudyMemberList.as_view()),
+    path('studies/', study_views.StudyList.as_view()),
+    path('studies/<int:pk>', study_views.StudyDetail.as_view()),
 
     ## schedules ##
     path('schedules/', schedule_views.ScheduleList.as_view()),
