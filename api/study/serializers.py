@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Study
 from ..study_member.serializers import StudyMemberSerializer
-from ..user.serializers import UserSerializer
 
 
 class StudySerializer(serializers.ModelSerializer):
