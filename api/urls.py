@@ -24,14 +24,15 @@ urlpatterns = [
     path('study_members/<int:pk>', study_member_views.StudyMemeberDetail.as_view()),
 
     ## studys ##
-    path('studies/', study_views.StudyList.as_view()),
+    path('studies', study_views.StudyList.as_view()),
     path('studies/<int:pk>', study_views.StudyDetail.as_view()),
+    path('studies/<int:pk>/members', study_views.StudyMember.as_view()),
 
     ## schedules ##
     path('schedules', schedule_views.ScheduleList.as_view()),
     path('schedules/<int:pk>', schedule_views.ScheduleDetail.as_view()),
 
     ## activity_pictures ##
-    path('aps', activity_picture_views.APList.as_view()),
-    path('aps/<int:pk>', activity_picture_views.APDetail.as_view()),
+    path('activity-pictures', activity_picture_views.APList.as_view()),
+    path('activity-pictures/<int:pk>', activity_picture_views.APDetail.as_view()),
 ]

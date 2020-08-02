@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
-from .serializers import StudySerializer, StudyDetailSerializer
+from .serializers import StudySerializer, StudyDetailSerializer, StudyMemberSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -14,7 +14,7 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-        ìŠ¤í„°ë”” ê·¸ë£¹ ì¡°íšŒ API
+        ½ºÅÍµğ ±×·ì Á¶È¸ API
  
         """,
     )
@@ -29,10 +29,10 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-        ìŠ¤í„°ë”” ê·¸ë£¹ ìƒì„± API
+        ½ºÅÍµğ ±×·ì »ı¼º API
 
         ---
-        ìŠ¤í„°ë”” ê·¸ë£¹ì„ ìƒì„±í•©ë‹ˆë‹¤.
+        ½ºÅÍµğ ±×·ìÀ» »ı¼ºÇÕ´Ï´Ù.
         """,
     )
     def post(self, request):
@@ -53,10 +53,10 @@ class StudyDetail(APIView):
         tags=['studies'],
         operation_description=
         """
-        íŠ¹ì • idë¥¼ ê°€ì§„ ìŠ¤í„°ë”” ê·¸ë£¹ ì¡°íšŒ API
+        Æ¯Á¤ id¸¦ °¡Áø ½ºÅÍµğ ±×·ì Á¶È¸ API
 
         ---
-        ìŠ¤í„°ë””ê·¸ë£¹ì„ ì¡°íšŒí•©ë‹ˆë‹¤.
+        ½ºÅÍµğ±×·ìÀ» Á¶È¸ÇÕ´Ï´Ù.
         
         """,
     )
@@ -65,6 +65,12 @@ class StudyDetail(APIView):
         serializer = StudyDetailSerializer(study_member)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # pkì— í•´ë‹¹í•˜ëŠ”  POST ê°ì²´ ë°˜í™˜
+
+class StudyMember(APIView):
     def get_object(self, pk):
         return get_object_or_404(Study, pk=pk)
+
+    def get(self, request, pk):
+        study_member = self.get_object(pk)
+        serializer = StudyMemberSerializer(study_member)
+        return Response(serializer.data, status=status.HTTP_200_OK)
