@@ -14,7 +14,7 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-        ½ºÅÍµğ ±×·ì Á¶È¸ API
+        ìŠ¤í„°ë”” ê·¸ë£¹ ì¡°íšŒ API
  
         """,
     )
@@ -29,10 +29,7 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-        ½ºÅÍµğ ±×·ì »ı¼º API
-
-        ---
-        ½ºÅÍµğ ±×·ìÀ» »ı¼ºÇÕ´Ï´Ù.
+        ìŠ¤í„°ë”” ê·¸ë£¹ ìƒì„± API
         """,
     )
     def post(self, request):
@@ -53,13 +50,13 @@ class StudyDetail(APIView):
         tags=['studies'],
         operation_description=
         """
-        Æ¯Á¤ id¸¦ °¡Áø ½ºÅÍµğ ±×·ì Á¶È¸ API
-
-        ---
-        ½ºÅÍµğ±×·ìÀ» Á¶È¸ÇÕ´Ï´Ù.
+        íŠ¹ì • idë¥¼ ê°€ì§„ ìŠ¤í„°ë”” ê·¸ë£¹ ì¡°íšŒ API
         
         """,
     )
+    def get_object(self, pk):
+        return get_object_or_404(Study, pk=pk)
+
     def get(self, request, pk):
         study_member = self.get_object(pk)
         serializer = StudyDetailSerializer(study_member)
@@ -67,6 +64,15 @@ class StudyDetail(APIView):
 
 
 class StudyMember(APIView):
+    @swagger_auto_schema(
+        responses={200: StudyMemberSerializer()},
+        tags=['studies'],
+        operation_description=
+        """
+        ìŠ¤í„°ë”” ê·¸ë£¹ì˜ íŠ¹ì • idë¥¼ ê°€ì§„ ìŠ¤í„°ë”” ë§´ë²„ ì¡°íšŒ API
+
+        """,
+    )
     def get_object(self, pk):
         return get_object_or_404(Study, pk=pk)
 
