@@ -19,8 +19,8 @@ class StudyList(APIView):
         """,
     )
     def get(self, request):
-        study = Study.objects.all()
-        serializer = StudySerializer(study, many=True)
+        get_data = request.query_params
+        serializer = self.get_serializer(get_data=get_data)
         return Response(serializer.data)
 
     @swagger_auto_schema(
@@ -42,6 +42,17 @@ class StudyList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_serializer(self, get_data):
+        if 'title' in get_data:
+            category = Study.objects.filter(title__contains=get_data['title'])
+            serializer = StudySerializer(category, many=True)
+
+        else:
+            category = Study.objects.all()
+            serializer = StudySerializer(category, many=True)
+
+        return serializer
 
 
 class StudyDetail(APIView):

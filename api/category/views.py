@@ -22,9 +22,22 @@ class CategoryList(APIView):
         """,
     )
     def get(self, request):
-        category = Category.objects.all()
-        serializer = CategorySerializer(category,many=True)
+        get_data = request.query_params
+
+        serializer = self.get_serializer(get_data=get_data)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_serializer(self, get_data):
+        if 'name' in get_data:
+            category = Category.objects.filter(name=get_data['name'])
+            serializer = CategoryDetailSerializer(category, many=True)
+
+        else:
+            category = Category.objects.all()
+            serializer = CategorySerializer(category, many=True)
+
+        return serializer
 
 
 class CategoryDetail(APIView):
@@ -42,7 +55,7 @@ class CategoryDetail(APIView):
         serializer = CategoryDetailSerializer(category)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # pkì— í•´ë‹¹í•˜ëŠ”  POST ê°ì²´ ë°˜í™˜
+    # pk¿¡ ÇØ´çÇÏ´Â  POST °´Ã¼ ¹İÈ¯
     def get_object(self, pk):
         return get_object_or_404(Category, pk=pk)
 
