@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import ActivityPicture
@@ -16,9 +17,6 @@ class APList(APIView):
         """
         활동사진 조회 API
 
-        ---
-        활동사진을 조회합니다.
-             
         """,
     )
     def get(self, request):
@@ -26,16 +24,18 @@ class APList(APIView):
         serializer = ActivityPictureSerializer(ap,many=True)
         return Response(serializer.data)
 
+
     @swagger_auto_schema(
         request_body=ActivityPictureSerializer,
-        responses={200: ActivityPictureSerializer()},
+        responses={201: ActivityPictureSerializer()},
         tags=['activity_pictures'],
         operation_description=
         """
         활동사진 생성 API
         
         ---
-        할동사진을 생성합니다.
+            요청사양
+                - path: 파일 경로
         """,
     )
     def post(self, request):
@@ -54,9 +54,6 @@ class APDetail(APIView):
         """
         특정 id를 가진 활동사진 조회 API
 
-        ---
-        특정 id를 가진 활동사진을 조회합니다.
-        
         """,
     )
     def get(self, request, pk):

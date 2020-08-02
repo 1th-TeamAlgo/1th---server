@@ -16,9 +16,6 @@ class StudyMemberList(APIView):
         """
         스터디 회원 조회 API
 
-        ---
-        스터디 회원을 조회합니다.
-        
         """,
     )
     def get(self, request):
@@ -28,14 +25,12 @@ class StudyMemberList(APIView):
 
     @swagger_auto_schema(
         request_body=StudyMemberSerializer,
-        responses={200: StudyMemberSerializer(many=True)},
+        responses={201: StudyMemberSerializer()},
         tags=['study_members'],
         operation_description=
         """
         스터디 회원 생성 API
 
-        ---
-        스터디 회원을 생성합니다.
         """,
     )
     def post(self, request):
@@ -48,15 +43,12 @@ class StudyMemberList(APIView):
 
 class StudyMemeberDetail(APIView):
     @swagger_auto_schema(
-        responses={200: StudyMemberSerializer(many=True)},
+        responses={200: StudyMemberSerializer()},
         tags=['study_members'],
         operation_description=
         """
         특정 id를 가진 스터디 회원 조회 API
 
-        ---
-        스터디회원을 조회합니다.
-        
         """,
     )
     def get(self, request, pk):

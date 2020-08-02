@@ -15,9 +15,6 @@ class ScheduleList(APIView):
         """
         스케줄 조회 API
     
-        ---
-        스케줄을 조회합니다.
-        
         """,
     )
     def get(self, request):
@@ -27,14 +24,12 @@ class ScheduleList(APIView):
 
     @swagger_auto_schema(
         request_body=ScheduleSerializer,
-        responses={200: ScheduleSerializer(many=True)},
+        responses={201: ScheduleSerializer()},
         tags=['schedules'],
         operation_description=
         """
         스케줄 생성 API
 
-        ---
-        스케줄을 생성합니다.
         """,
     )
     def post(self, request):
@@ -47,14 +42,11 @@ class ScheduleList(APIView):
 
 class ScheduleDetail(APIView):
     @swagger_auto_schema(
-        responses={200: ScheduleSerializer(many=True)},
+        responses={200: ScheduleSerializer()},
         tags=['schedules'],
         operation_description=
         """
         특정 id를 가진 스케줄 조회 API
-
-        ---
-        특정 id를 가진 스케줄을 조회합니다.
         
         """,
     )

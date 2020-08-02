@@ -1,4 +1,6 @@
 from django.db import models
+from rest_framework.fields import JSONField
+
 from ..study.models import Study
 
 

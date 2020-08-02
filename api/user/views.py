@@ -16,9 +16,6 @@ class UserList(APIView):
         """
         회원 조회 API
 
-        ---
-        회원을 조회합니다.
-        
         """,
     )
     def get(self, request):
@@ -28,14 +25,12 @@ class UserList(APIView):
 
     @swagger_auto_schema(
         request_body=UserSerializer,
-        responses={200: UserSerializer(many=True)},
+        responses={201: UserSerializer()},
         tags=['users'],
         operation_description=
         """      
         회원 생성 API
 
-        ---
-        회원을 생성합니다.
         """,
     )
     def post(self, request):
@@ -55,14 +50,11 @@ class UserList(APIView):
 
 class UserDetail(APIView):
     @swagger_auto_schema(
-        responses={200: UserSerializer(many=True)},
+        responses={200: UserSerializer()},
         tags=['users'],
         operation_description=
         """
         특정 id를 가진 회원 조회 API
-
-        ---
-        회원을 조회합니다.
         
         """,
     )
@@ -77,14 +69,12 @@ class UserDetail(APIView):
 
     @swagger_auto_schema(
         request_body=UserSerializer,
-        responses={200: UserSerializer(many=True)},
+        responses={201: UserSerializer()},
         tags=['users'],
         operation_description=
         """
         특정 id를 가진 회원 수정 API
 
-        ---
-        회원을 수정합니다.
         """,
     )
     def put(self, request, pk):
@@ -96,18 +86,16 @@ class UserDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
-        request_body=UserSerializer,
-        responses={200: UserSerializer(many=True)},
+        #request_body=UserSerializer,
+        responses={200: '{"user_id": "1"}'},
         tags=['users'],
         operation_description=
         """
         특정 id를 가진 회원 삭제 API
 
-        ---
-        회원을 삭제합니다.
         """,
     )
     def delete(self, request, pk):
         post = self.get_object(pk)
         post.delete()
-        return Response(status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_200_OK)
