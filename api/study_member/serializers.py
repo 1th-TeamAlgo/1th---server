@@ -1,11 +1,15 @@
 from rest_framework import serializers
 from .models import StudyMember
-from ..user.serializers import UserSerializer
 
 
 class StudyMemberSerializer(serializers.ModelSerializer):
-    user_name = serializers.ReadOnlyField(source='user.name')
+    id = serializers.ReadOnlyField(source='user.user_id')
+    name = serializers.ReadOnlyField(source='user.name')
+    email = serializers.ReadOnlyField(source='user.email')
+    birthday = serializers.ReadOnlyField(source='user.birthday')
+    cellphone = serializers.ReadOnlyField(source='user.cellphone')
+    gender = serializers.ReadOnlyField(source='user.gender')
 
     class Meta:
         model = StudyMember
-        fields = ['study_member_id', 'study_id', 'user_id', 'is_manager', 'user_name']
+        fields = ['is_manager', 'id', 'name', 'email', 'birthday', 'cellphone', 'gender']
