@@ -4,7 +4,7 @@ from ..study.models import Study
 
 # 일정
 class Schedule(models.Model):
-    schedule_id = models.IntegerField(primary_key=True)
+    schedule_id = models.AutoField(primary_key=True)
     study = models.ForeignKey(Study, on_delete=models.CASCADE)
     datetime = models.DateField()
     place = models.CharField(max_length=20)

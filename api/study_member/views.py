@@ -18,11 +18,7 @@ class StudyMemberList(APIView):
 
         ---
         스터디 회원을 조회합니다.
-        # 내용
-            - study_member_id : 기본키(식별번호)
-            - study_id : 스터디 기본키 참조(외래키)
-            - user_id : 회원 기본키 참조(외래키)
-            - is_manager : 스터디 그룹 운영진 or 회원 구분
+        
         """,
     )
     def get(self, request):
@@ -60,11 +56,7 @@ class StudyMemeberDetail(APIView):
 
         ---
         스터디회원을 조회합니다.
-        # 내용
-            - study_member_id : 기본키(식별번호)
-            - study_id : 스터디 기본키 참조(외래키)
-            - user_id : 회원 기본키 참조(외래키)
-            - is_manager : 스터디 그룹 운영진 or 회원 구분
+        
         """,
     )
     def get(self, request, pk):

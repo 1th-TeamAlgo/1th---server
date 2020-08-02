@@ -9,6 +9,7 @@ from rest_framework import status
 
 
 class CategoryList(APIView):
+
     @swagger_auto_schema(
         responses={200: CategorySerializer(many=True)},
         tags=['categories'],
@@ -18,15 +19,12 @@ class CategoryList(APIView):
     
         ---
         카테고리를 조회합니다.
-        # 내용
-            - category_id : 기본키(식별번호)
-            - name : 카테고리 이름
-            - study : 스터디 그룹 정보
+
         """,
     )
     def get(self, request):
         category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
+        serializer = CategorySerializer(category,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     #
     # def post(self, request):
@@ -39,7 +37,7 @@ class CategoryList(APIView):
 
 class CategoryDetail(APIView):
     @swagger_auto_schema(
-        responses={200: CategorySerializer(many=True)},
+        responses={200: CategorySerializer()},
         tags=['categories'],
         operation_description=
         """
@@ -47,10 +45,7 @@ class CategoryDetail(APIView):
         
         ---
         특정 id를 가진 카테고리를 조회합니다.
-        # 내용
-            - category_id : 기본키(식별번호)
-            - name : 카테고리 이름
-            - study : 스터디 그룹 정보
+        
         """,
     )
     def get(self, request, pk):

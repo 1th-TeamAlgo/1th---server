@@ -17,14 +17,7 @@ class ScheduleList(APIView):
     
         ---
         스케줄을 조회합니다.
-        # 내용
-            - schedule_id : 기본키(식별번호)
-            - study_id : 스터디 기본키 참조(외래키)
-            - datetime : 스터디 모임 시간
-            - place : 스터디 모임 장소
-            - address : 스터디 모임 주소
-            - title : 스케줄 일정
-            - description : 스케줄 간단 설명
+        
         """,
     )
     def get(self, request):
@@ -62,14 +55,7 @@ class ScheduleDetail(APIView):
 
         ---
         특정 id를 가진 스케줄을 조회합니다.
-        # 내용
-            - schedule_id : 기본키(식별번호)
-            - study_id : 스터디 기본키 참조(외래키)
-            - datetime : 스터디 모임 시간
-            - place : 스터디 모임 장소
-            - address : 스터디 모임 주소
-            - title : 스케줄 일정
-            - description : 스케줄 간단 설명
+        
         """,
     )
     def get(self, request, pk):

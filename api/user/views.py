@@ -18,14 +18,7 @@ class UserList(APIView):
 
         ---
         회원을 조회합니다.
-        # 내용
-            - user_id : 기본키(식별번호)
-            - category_id : 카테고리 기본키 참조(외래키)
-            - title : 스터디 그룹 이름
-            - limit : 스터디 그룹 모집 최대인원
-            - description : 스터디 그룹 간단소개
-            - create_at : 스터디 그룹 생성날짜
-            - update_at : 스터디 그룹 업데이트 날짜
+        
         """,
     )
     def get(self, request):
@@ -70,14 +63,7 @@ class UserDetail(APIView):
 
         ---
         회원을 조회합니다.
-        # 내용
-            - user_id : 기본키(식별번호)
-            - category_id : 카테고리 기본키 참조(외래키)
-            - title : 스터디 그룹 이름
-            - limit : 스터디 그룹 모집 최대인원
-            - description : 스터디 그룹 간단소개
-            - create_at : 스터디 그룹 생성날짜
-            - update_at : 스터디 그룹 업데이트 날짜
+        
         """,
     )
     def get(self, request, pk, format=None):

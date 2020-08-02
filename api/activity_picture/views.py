@@ -18,22 +18,17 @@ class APList(APIView):
 
         ---
         활동사진을 조회합니다.
-        # 내용
-            - activity_picture_id : 기본키(식별번호)
-            - study_id : 스터디 기본키 참조 (외래키)
-            - path : 활동사진 경로
-            - create_at : 활동사진 생성 날짜
-            - update_at : 활동사진 업데이트 날짜        
+             
         """,
     )
     def get(self, request):
         ap = ActivityPicture.objects.all()
-        serializer = ActivityPictureSerializer(ap, many=True)
+        serializer = ActivityPictureSerializer(ap,many=True)
         return Response(serializer.data)
 
     @swagger_auto_schema(
         request_body=ActivityPictureSerializer,
-        responses={200: ActivityPictureSerializer(many=True)},
+        responses={200: ActivityPictureSerializer()},
         tags=['activity_pictures'],
         operation_description=
         """
@@ -53,7 +48,7 @@ class APList(APIView):
 
 class APDetail(APIView):
     @swagger_auto_schema(
-        responses={200: ActivityPictureSerializer(many=True)},
+        responses={200: ActivityPictureSerializer()},
         tags=['activity_pictures'],
         operation_description=
         """
@@ -61,12 +56,7 @@ class APDetail(APIView):
 
         ---
         특정 id를 가진 활동사진을 조회합니다.
-        # 내용
-            - activity_picture_id : 기본키(식별번호)
-            - study_id : 스터디 기본키 참조 (외래키)
-            - path : 사진 경로
-            - create_at : 생성 날짜
-            - update_at : 업데이트 날짜
+        
         """,
     )
     def get(self, request, pk):

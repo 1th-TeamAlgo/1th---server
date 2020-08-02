@@ -8,4 +8,4 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['category_id', 'name', 'study',]
+        fields = ['category_id', 'name', 'study']

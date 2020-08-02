@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
@@ -18,14 +18,7 @@ class StudyList(APIView):
 
         ---
         스터디 그룹을 조회합니다.
-        # 내용
-            - study_id : 기본키(식별번호)
-            - category_id : 카테고리 기본키 참조(외래키)
-            - title : 스터디 그룹 이름
-            - limit : 스터디 그룹 모집 최대인원
-            - description : 스터디 그룹 간단소개
-            - create_at : 스터디 그룹 생성날짜
-            - update_at : 스터디 그룹 업데이트 날짜
+        
         """,
     )
     def get(self, request):
@@ -48,6 +41,10 @@ class StudyList(APIView):
     def post(self, request):
         serializer = StudySerializer(data=request.data)
         if serializer.is_valid():
+            # study = serializer.save(commit=False)
+            # study.category = request.category
+            # study.save()
+            # return redirect(study)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
@@ -63,14 +60,7 @@ class StudyDetail(APIView):
 
         ---
         스터디그룹을 조회합니다.
-        # 내용
-            - study_id : 기본키(식별번호)
-            - category_id : 카테고리 기본키 참조(외래키)
-            - title : 스터디 그룹 이름
-            - limit : 스터디 그룹 모집 최대인원
-            - description : 스터디 그룹 간단소개
-            - create_at : 스터디 그룹 생성날짜
-            - update_at : 스터디 그룹 업데이트 날짜
+        
         """,
     )
     def get(self, request, pk):
