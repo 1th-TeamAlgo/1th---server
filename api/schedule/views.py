@@ -29,6 +29,13 @@ class ScheduleList(APIView):
         operation_description=
         """
         스케줄 생성 API
+        
+            요청사양
+                - datetime : 일정 날짜
+                - place : 장소
+                - address : 주소
+                - title : 일정 이름
+                - description : 일정 소개 
 
         """,
     )

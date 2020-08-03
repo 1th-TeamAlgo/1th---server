@@ -18,7 +18,7 @@ class StudyDetailSerializer(serializers.ModelSerializer):
                   'study_members', ]
 
 
-class StudyMemberSerializer(serializers.ModelSerializer):
+class MemberOfStudySerializer(serializers.ModelSerializer):
     study_members = StudyMemberSerializer(source='studymember_set', many=True, read_only=True)
 
     class Meta:

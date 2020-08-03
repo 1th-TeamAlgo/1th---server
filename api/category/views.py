@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Category
@@ -9,21 +10,25 @@ from rest_framework import status
 
 
 class CategoryList(APIView):
+    param_hello_hint = openapi.Parameter(
+        'name',
+        openapi.IN_QUERY,
+        description='카테고리 이름으로 검색',
+        type=openapi.TYPE_STRING
+    )
     @swagger_auto_schema(
+        manual_parameters=[param_hello_hint],
         responses={200: CategorySerializer(many=True)},
         tags=['categories'],
         operation_description=
         """
-        List all categoies
+        카테고리 조회 API
     
         ---
-        
-
         """,
     )
     def get(self, request):
         get_data = request.query_params
-
         serializer = self.get_serializer(get_data=get_data)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -39,6 +44,13 @@ class CategoryList(APIView):
 
         return serializer
 
+    # def get(self, request):
+    #     get_data = request.query_params
+    #
+    #     serializer = self.get_serializer(get_data=get_data)
+    #
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class CategoryDetail(APIView):
     @swagger_auto_schema(
@@ -46,7 +58,7 @@ class CategoryDetail(APIView):
         tags=['categories'],
         operation_description=
         """
-        GET a category
+        특정 id를 가진 카테고리 조회 API
         
         """,
     )
@@ -55,7 +67,7 @@ class CategoryDetail(APIView):
         serializer = CategoryDetailSerializer(category)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # pk�� �ش��ϴ�  POST ��ü ��ȯ
+    # pk에 해당하는  POST 객체 반환
     def get_object(self, pk):
         return get_object_or_404(Category, pk=pk)
 

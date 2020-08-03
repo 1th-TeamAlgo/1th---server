@@ -30,7 +30,14 @@ class UserList(APIView):
         operation_description=
         """      
         회원 생성 API
-
+        
+        ---
+            요청사양
+                - email : 이메일
+                - name : 이름
+                - birthday : 생년월일
+                - cellphone : 휴대폰 번호
+                - gender : 성별
         """,
     )
     def post(self, request):

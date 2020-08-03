@@ -12,4 +12,4 @@ class StudyMemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudyMember
-        fields = ['is_manager', 'id', 'name', 'email', 'birthday', 'cellphone', 'gender']
+        fields = ['is_manager', 'study', 'user', 'id', 'name', 'email', 'birthday', 'cellphone', 'gender', ]
