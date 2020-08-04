@@ -50,7 +50,8 @@ class StudyList(APIView):
         operation_description=
         """
         스터디 그룹 생성 API
-
+        
+        ---
             요청사양
                 - category : 카테고리 번호
                 - title : 스터디 이름

@@ -30,6 +30,7 @@ class ScheduleList(APIView):
         """
         스케줄 생성 API
         
+        ---
             요청사양
                 - datetime : 일정 날짜
                 - place : 장소
