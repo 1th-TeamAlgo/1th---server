@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include, re_path
@@ -6,7 +7,14 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+# from rest_framework import routers
+# from api.activity_picture.views import APIView
+#
+# router = routers.DefaultRouter(trailing_slash= False)
+# router.register('aps',APIView)
+
 urlpatterns = [
+    # url(r'^', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -16,11 +24,18 @@ urlpatterns = [
 # swagger 엔드포인트는 DEBUG Mode에서만 노출
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="WiseStudy API",
         default_version='v1',
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        description=
+        """
+        WiseStudy Open API 문서 페이지
+
+        "슬기로운 공부생활" 스터디 앱 만들기 위한 API 문서입니다.
+        
+        팀원:Team_Algo
+        """,
+        terms_of_service="https://github.com/wisestudy",
+        contact=openapi.Contact(email="wisestudy@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
@@ -31,5 +46,7 @@ if settings.DEBUG:
     urlpatterns += [
         re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
         re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-        re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
+        re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     ]
+
+APPEND_SLASH = False

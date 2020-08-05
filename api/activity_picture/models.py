@@ -1,4 +1,6 @@
 from django.db import models
+from rest_framework.fields import JSONField
+
 from ..study.models import Study
 
 
@@ -9,3 +11,6 @@ class ActivityPicture(models.Model):
     path = models.CharField(max_length=200)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.path
