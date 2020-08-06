@@ -44,9 +44,10 @@ schema_view = get_schema_view(
 
 if settings.DEBUG:
     urlpatterns += [
-        re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-        re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-        re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+        re_path(r'^docs(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+        re_path(r'^docs$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+        # UI 상태 불량으로 인해 redoc은 이제 제공하지 않습니다.
+        # re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     ]
 
 APPEND_SLASH = False

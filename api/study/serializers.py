@@ -14,12 +14,12 @@ class StudyDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Study
-        fields = ['study_id', 'category_id', 'title', 'limit', 'description', 'create_at', 'update_at',
+        fields = ['study_id', 'category', 'title', 'limit', 'description', 'create_at', 'update_at',
                   'study_members', ]
 
 
 class MemberOfStudySerializer(serializers.ModelSerializer):
-    study_members = StudyMemberSerializer(source='studymember_set', many=True, read_only=True)
+    study_members = StudyMemberSerializer(source='studymember_set', many=True)
 
     class Meta:
         model = Study

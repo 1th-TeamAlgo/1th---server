@@ -11,17 +11,17 @@ urlpatterns = [
     path('users', user_views.UserList.as_view()),
     path('users/<int:pk>', user_views.UserDetail.as_view()),
 
-    # categorys ##
-    path('categories', category_views.CategoryList.as_view()),
-    path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
+    # categorys(deprecate) ##
+    # path('categories', category_views.CategoryList.as_view()),
+    #path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
 
     # studys ##
-    path('studies', study_views.StudyList.as_view()),
-    path('studies/<int:pk>', study_views.StudyDetail.as_view()),
+    # path('studies', study_views.StudyList.as_view()),
+    # path('studies/<int:pk>', study_views.StudyDetail.as_view()),
 
-    ## study_memebers ##
-    path('study_members', study_member_views.StudyMemberList.as_view()),
-    path('study_members/<int:pk>', study_member_views.StudyMemeberDetail.as_view()),
+    ## study_memebers(deprecate) ##
+    # path('study_members', study_member_views.StudyMemberList.as_view()),
+    # path('study_members/<int:pk>', study_member_views.StudyMemeberDetail.as_view()),
 
     ## studys ##
     path('studies', study_views.StudyList.as_view()),
@@ -32,7 +32,7 @@ urlpatterns = [
     path('schedules', schedule_views.ScheduleList.as_view()),
     path('schedules/<int:pk>', schedule_views.ScheduleDetail.as_view()),
 
-    ## activity_pictures ##
-    path('activity-pictures', activity_picture_views.APList.as_view()),
-    path('activity-pictures/<int:pk>', activity_picture_views.APDetail.as_view()),
+    ## activity_pictures(Update 필요) ##
+    # path('activity-pictures', activity_picture_views.APList.as_view()),
+    # path('activity-pictures/<int:pk>', activity_picture_views.APDetail.as_view()),
 ]
