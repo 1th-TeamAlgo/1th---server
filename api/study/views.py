@@ -115,3 +115,27 @@ class StudyMember(APIView):
         return get_object_or_404(Study, pk=pk)
 
 
+    # def get_object(self, pk):
+    #     return get_object_or_404(Study, pk=pk)
+
+    @swagger_auto_schema(
+        request_body=MemberOfStudySerializer,
+        responses={201: MemberOfStudySerializer()},
+        tags=['studies'],
+        operation_description=
+        """
+        스터디 회원 생성 API
+        
+        ---
+            요청사양
+                -is_manager : 운영진인지 아닌지 구분
+                
+                
+        """,
+    )
+    def post(self, request):
+        serializer = MemberOfStudySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
