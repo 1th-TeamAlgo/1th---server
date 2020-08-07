@@ -42,13 +42,6 @@ class ResponseFormattingMiddleware:
                         'message': data,
 
                     })
-                finally:
-                    if is_client_error(response.status_code):
-                        response_format['code'] = response.status_code
-                        response_format['status'] = response.status_text
-                        response_format['message'] = data
-                    else:
-                        response_format['message'] = data
 
                     response.data = response_format
                     response.content = response.render().rendered_content
