@@ -34,7 +34,7 @@ class StudyList(APIView):
 
     def get_serializer(self, get_data):
         if 'title' in get_data:
-            study = Study.objects.filter(title_contains=get_data['title'])
+            study = Study.objects.filter(title__contains=get_data['title'])
             serializer = StudySerializer(study, many=True)
 
         else:
@@ -53,7 +53,7 @@ class StudyList(APIView):
         
         ---
             요청사양
-                - category : 카테고리 번호
+                - category : 카테고리 이름
                 - title : 스터디 이름
                 - limit : 인원 제한
                 - descriptions : 스터디 소개

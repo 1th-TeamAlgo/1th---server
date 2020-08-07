@@ -13,7 +13,7 @@ urlpatterns = [
 
     # categorys(deprecate) ##
     # path('categories', category_views.CategoryList.as_view()),
-    #path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
+    # path('categories/<int:pk>', category_views.CategoryDetail.as_view()),
 
     # studys ##
     # path('studies', study_views.StudyList.as_view()),
