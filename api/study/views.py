@@ -34,7 +34,7 @@ class StudyList(APIView):
 
     def get_serializer(self, get_data):
         if 'title' in get_data:
-            study = Study.objects.filter(title_contains=get_data['title'])
+            study = Study.objects.filter(title__contains=get_data['title'])
             serializer = StudySerializer(study, many=True)
 
         else:
