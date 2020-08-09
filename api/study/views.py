@@ -3,7 +3,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
-from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer
+from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -16,6 +16,7 @@ class StudyList(APIView):
         description='스터디 이름으로 검색',
         type=openapi.TYPE_STRING
     )
+
     @swagger_auto_schema(
         manual_parameters=[param_hello_hint],
         responses={200: StudySerializer(many=True)},
@@ -38,7 +39,7 @@ class StudyList(APIView):
             serializer = StudySerializer(study, many=True)
 
         else:
-            study= Study.objects.all()
+            study = Study.objects.all()
             serializer = StudySerializer(study, many=True)
 
         return serializer
@@ -143,3 +144,31 @@ class StudyMember(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudySchedule(APIView):
+    @swagger_auto_schema(
+        responses={200: ScheduleOfStudySerializer()},
+        tags=['studies'],
+        operation_description=
+        """
+        스터디의 schedule 목록
+        ---
+            정렬사항 
+                - datetime의 역순으로 정렬
+                
+            요청사항
+                - study_id : 스터디의 id
+
+        """,
+    )
+    
+    def get(self, request, pk):
+        print("StudySchedule")
+        study_schedule = self.get_object(pk)
+        print(study_schedule)
+        serializer = ScheduleOfStudySerializer(study_schedule)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_object(self, pk):
+        return get_object_or_404(Study, pk=pk)
