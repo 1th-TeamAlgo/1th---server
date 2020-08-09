@@ -8,19 +8,19 @@ from drf_yasg.utils import swagger_auto_schema
 
 
 class ScheduleList(APIView):
-    # @swagger_auto_schema(
-    #     responses={200: ScheduleSerializer(many=True)},
-    #     tags=['schedules'],
-    #     operation_description=
-    #     """
-    #     스케줄 조회 API
-    #
-    #     """,
-    # )
-    # def get(self, request):
-    #     schedule = Schedule.objects.all()
-    #     serializer = ScheduleSerializer(schedule, many=True)
-    #     return Response(serializer.data)
+    @swagger_auto_schema(
+        responses={200: ScheduleSerializer(many=True)},
+        tags=['schedules'],
+        operation_description=
+        """
+        스케줄 조회 API
+   
+        """,
+    )
+    def get(self, request, pk):
+        schedule = Schedule.objects.all()
+        serializer = ScheduleSerializer(schedule, many=True)
+        return Response(serializer.data)
 
     @swagger_auto_schema(
         request_body=ScheduleSerializer,
@@ -39,7 +39,7 @@ class ScheduleList(APIView):
                 - address : 주소
                 - title : 일정 이름
                 - description : 일정 소개 
-
+    
         """,
     )
     def post(self, request):

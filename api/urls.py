@@ -25,10 +25,10 @@ urlpatterns = [
 
     ## studys ##
     path('studies', study_views.StudyList.as_view()),
-    path('studies/<int:pk>', study_views.StudyDetail.as_view()),
-    path('studies/<int:pk>/members', study_views.StudyMember.as_view()),
-    path('studies/<int:pk>/schedules', study_views.StudySchedule.as_view()),
-
+    path('studies/<int:studies_id>', study_views.StudyDetail.as_view()),
+    path('studies/<int:studies_id>/members', study_views.StudyMember.as_view()),
+    path('studies/<int:studies_id>/schedules', study_views.StudySchedule.as_view()),
+    path('studies/<int:studies_id>/schedules/<int:schedules_id>', study_views.StudyScheduleDetail.as_view()),
     ## schedules ##
     path('schedules', schedule_views.ScheduleList.as_view()),
     path('schedules/<int:pk>', schedule_views.ScheduleDetail.as_view()),

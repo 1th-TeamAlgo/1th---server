@@ -4,6 +4,8 @@ from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
 from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer
+from ..schedule.serializers import ScheduleSerializer, ScheduleDeleteSerializer
+from ..schedule.models import Schedule
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -82,8 +84,8 @@ class StudyDetail(APIView):
         
         """,
     )
-    def get(self, request, pk):
-        study = self.get_object(pk)
+    def get(self, request, *args, **kwargs):
+        study = self.get_object(self.kwargs['studies_id'])
         serializer = StudyDetailSerializer(study)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -106,8 +108,8 @@ class StudyMember(APIView):
 
         """,
     )
-    def get(self, request, pk):
-        study_member = self.get_object(pk)
+    def get(self, request, *args, **kwargs):
+        study_member = self.get_object(self.kwargs['studies_id'])
         serializer = MemberOfStudySerializer(study_member)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -162,13 +164,83 @@ class StudySchedule(APIView):
 
         """,
     )
-    
-    def get(self, request, pk):
+    def get(self, request, *args, **kwargs):
         print("StudySchedule")
-        study_schedule = self.get_object(pk)
+        study_schedule = self.get_object(self.kwargs['studies_id'])
         print(study_schedule)
         serializer = ScheduleOfStudySerializer(study_schedule)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @swagger_auto_schema(
+        request_body=ScheduleSerializer,
+        responses={201: ScheduleSerializer()},
+        tags=['schedules'],
+        operation_description=
+        """
+        스케줄 생성 API
+
+        ---
+
+            요청사양
+                - study : 스터디 id
+                - datetime : 일정 날짜
+                - place : 장소
+                - address : 주소
+                - title : 일정 이름
+                - description : 일정 소개 
+
+        """,
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = ScheduleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
     def get_object(self, pk):
         return get_object_or_404(Study, pk=pk)
+
+
+class StudyScheduleDetail(APIView):
+    @swagger_auto_schema(
+        responses={200: ScheduleSerializer()},
+        tags=['schedules'],
+        operation_description=
+        """
+        특정 id를 가진 스케줄 조회 API
+
+        ---
+            요청사항
+                - schedule_id : 스케쥴 id
+
+        """,
+    )
+    def get(self, request, *args, **kwargs):
+        print("SADFSADFSDAFSDF")
+        schedule = self.get_object(schedule_id=self.kwargs['schedules_id'], study=self.kwargs['studies_id'])
+        serializer = ScheduleSerializer(schedule)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        responses={200: ScheduleDeleteSerializer()},
+        tags=['schedules'],
+        operation_description=
+        """
+        특정 id를 가진 스케줄 삭제 API
+
+        ---
+            요청사항
+                - schedule_id : 스케쥴 id
+
+        """,
+    )
+    def delete(self, request, *args, **kwargs):
+        schedule = self.get_object(schedule_id=self.kwargs['schedules_id'], study=self.kwargs['studies_id'])
+        serializer = ScheduleDeleteSerializer(schedule)
+        schedule.delete()
+        return Response(data=serializer.data)
+
+    # pk에 해당하는  POST 객체 반환
+    def get_object(self, study, schedule_id ):
+        return get_object_or_404(Schedule, pk=schedule_id, study=study)
