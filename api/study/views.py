@@ -218,9 +218,38 @@ class StudyScheduleDetail(APIView):
     )
     def get(self, request, *args, **kwargs):
         print("SADFSADFSDAFSDF")
-        schedule = self.get_object(schedule_id=self.kwargs['schedules_id'], study=self.kwargs['studies_id'])
+        schedule = self.get_object(schedule_id=self.kwargs['schedules_id'],
+                                   study=self.kwargs['studies_id'])
         serializer = ScheduleSerializer(schedule)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        responses={200: ScheduleSerializer()},
+        tags=['schedules'],
+        operation_description=
+        """
+        특정 id를 가진 스케줄 수정 API
+
+        ---
+            수정 가능한 필드 (
+                - datetime : 스케쥴 날짜
+                - place : 스케쥴 장소
+                - address : 스케쥴 주소
+                - title : 스케쥴 제목
+                - description : 스케쥴 설명
+
+        """,
+    )
+    def put(self, request, *args, **kwargs):
+        schedule = self.get_object(schedule_id=self.kwargs['schedules_id'],
+                                   study=self.kwargs['studies_id'])
+
+        serializer = ScheduleSerializer(schedule, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
     @swagger_auto_schema(
         responses={200: ScheduleDeleteSerializer()},
@@ -242,5 +271,5 @@ class StudyScheduleDetail(APIView):
         return Response(data=serializer.data)
 
     # pk에 해당하는  POST 객체 반환
-    def get_object(self, study, schedule_id ):
+    def get_object(self, study, schedule_id):
         return get_object_or_404(Schedule, pk=schedule_id, study=study)
