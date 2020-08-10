@@ -7,4 +7,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
         model = Schedule
         fields = ['schedule_id', 'study', 'datetime', 'place', 'address', 'title', 'description']
 
-
+class ScheduleDeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Schedule
+        fields = ['study', 'title',]

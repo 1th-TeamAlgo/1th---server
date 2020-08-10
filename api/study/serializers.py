@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Study
 from ..study_member.serializers import StudyMemberSerializer
+from ..schedule.serializers import ScheduleSerializer
 
 
 class StudySerializer(serializers.ModelSerializer):
@@ -24,3 +25,11 @@ class MemberOfStudySerializer(serializers.ModelSerializer):
     class Meta:
         model = Study
         fields = ['study_members', ]
+
+
+class ScheduleOfStudySerializer(serializers.ModelSerializer):
+    study_schedule = ScheduleSerializer(source='schedule_set', many=True)
+
+    class Meta:
+        model = Study
+        fields = ['study_schedule', ]
