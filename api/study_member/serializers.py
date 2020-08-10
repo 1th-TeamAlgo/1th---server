@@ -15,10 +15,4 @@ class StudyMemberSerializer(serializers.ModelSerializer):
         fields = ['is_manager', 'id', 'name', 'email', 'birthday', 'cellphone', 'gender', ]
 
 
-class UserStudySerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField(source='study.study_id')
-    title = serializers.ReadOnlyField(source='study.title')
 
-    class Meta:
-        model = StudyMember
-        fields = ['id', 'title']
