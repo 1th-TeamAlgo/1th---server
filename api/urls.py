@@ -1,9 +1,6 @@
 from django.urls import path, include
-from .category import views as category_views  # 카테고리
 from .user import views as user_views  # 유저
 from .study import views as study_views  # 스터디
-from .study_member import views as study_member_views  # 스터디원
-from .activity_picture import views as activity_picture_views  # 활동사진
 from .schedule import views as schedule_views  # 일정
 
 urlpatterns = [
@@ -25,8 +22,15 @@ urlpatterns = [
 
     ## studys ##
     path('studies', study_views.StudyList.as_view()),
-    path('studies/<int:pk>', study_views.StudyDetail.as_view()),
-    path('studies/<int:pk>/members', study_views.StudyMember.as_view()),
+    # path('studies/<int:pk>', study_views.StudyDetail.as_view()),
+    # path('studies/<int:pk>/members', study_views.StudyMember.as_view()),
+    # path('studies/<int:pk>/activity-pictures', study_views.Activity_pictures.as_view()),
+    path('studies/<int:studies_id>', study_views.StudyDetail.as_view()),
+    # path('studies/<int:studies_id>/members', study_views.StudyMember.as_view()),
+    path('studies/<int:studies_id>/schedules', study_views.StudySchedule.as_view()),
+    path('studies/<int:studies_id>/schedules/<int:schedules_id>', study_views.StudyScheduleDetail.as_view()),
+    path('studies/<int:studies_id>/activity_pictures', study_views.StudyActivity_pictures.as_view()),
+    path('studies/<int:studies_id>/activity_pictures/<int:activity_pictures_id>', study_views.StudyActivity_picturesDetail.as_view()),
 
     ## schedules ##
     path('schedules', schedule_views.ScheduleList.as_view()),

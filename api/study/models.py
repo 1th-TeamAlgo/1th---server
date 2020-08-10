@@ -1,5 +1,5 @@
 from django.db import models
-from ..category.models import Category
+
 from ..user.models import User
 
 
