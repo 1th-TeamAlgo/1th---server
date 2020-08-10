@@ -205,8 +205,9 @@ class StudyActivity_picturesDetail(APIView):
         operation_description=
         """
         특정 id를 가진 활동사진 수정 API
+        
         ---
-            수정 가능한 필드 (
+            수정 가능한 필드 :
                 - path: 파일경로
                 
         """,
@@ -215,7 +216,7 @@ class StudyActivity_picturesDetail(APIView):
         activity_picture = self.get_object(activity_picture_id=self.kwargs['activity_pictures_id'],
                                    study=self.kwargs['studies_id'])
 
-        serializer = ScheduleSerializer(activity_picture, data=request.data)
+        serializer = ActivityPictureSerializer(activity_picture, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -235,7 +236,7 @@ class StudyActivity_picturesDetail(APIView):
     )
     def delete(self, request, *args, **kwargs):
         activity_picture = self.get_object(activity_picture_id=self.kwargs['activity_pictures_id'], study=self.kwargs['studies_id'])
-        serializer = ScheduleDeleteSerializer(activity_picture)
+        serializer = ActivityPictureDeleteSerializer(activity_picture)
         activity_picture.delete()
         return Response(data=serializer.data)
 
@@ -361,7 +362,7 @@ class StudyScheduleDetail(APIView):
         """,
     )
     def get(self, request, *args, **kwargs):
-        print("SADFSADFSDAFSDF")
+        print("tudyScheduleDetail")
         schedule = self.get_object(schedule_id=self.kwargs['schedules_id'],
                                    study=self.kwargs['studies_id'])
         serializer = ScheduleSerializer(schedule)
@@ -374,8 +375,8 @@ class StudyScheduleDetail(APIView):
         """
         특정 id를 가진 스케줄 수정 API
         
-        ---
-            수정 가능한 필드 (
+        ---       
+            수정 가능한 필드 :
                 - datetime : 스케쥴 날짜
                 - place : 스케쥴 장소
                 - address : 스케쥴 주소

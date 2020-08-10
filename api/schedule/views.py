@@ -14,11 +14,11 @@ class ScheduleList(APIView):
         operation_description=
         """
         스케줄 조회 API
-    
+   
     
         """,
     )
-    def get(self, request):
+    def get(self, request, pk):
         schedule = Schedule.objects.all()
         serializer = ScheduleSerializer(schedule, many=True)
         return Response(serializer.data)
@@ -32,6 +32,7 @@ class ScheduleList(APIView):
         스케줄 생성 API
         
         ---
+            
             요청사양
                 - study : 스터디 id
                 - datetime : 일정 날짜
@@ -39,7 +40,7 @@ class ScheduleList(APIView):
                 - address : 주소
                 - title : 일정 이름
                 - description : 일정 소개 
-
+    
         """,
     )
     def post(self, request):
@@ -90,4 +91,3 @@ class ScheduleDetail(APIView):
     # pk에 해당하는  POST 객체 반환
     def get_object(self, pk):
         return get_object_or_404(Schedule, pk=pk)
-
