@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserDetailSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -57,7 +57,7 @@ class UserList(APIView):
 
 class UserDetail(APIView):
     @swagger_auto_schema(
-        responses={200: UserSerializer()},
+        responses={200: UserDetailSerializer()},
         tags=['users'],
         operation_description=
         """
@@ -67,8 +67,9 @@ class UserDetail(APIView):
     )
     def get(self, request, pk, format=None):
         user = self.get_object(pk)
-        serializer = UserSerializer(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = UserDetailSerializer(user)
+        print(serializer.data)
+        return Response(serializer.data)
 
     # pk에 해당하는  POST 객체 반환
     def get_object(self, pk):
@@ -93,7 +94,7 @@ class UserDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
-        #request_body=UserSerializer,
+        # request_body=UserSerializer,
         responses={200: '{"user_id": "1"}'},
         tags=['users'],
         operation_description=
