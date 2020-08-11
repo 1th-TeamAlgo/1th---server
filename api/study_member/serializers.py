@@ -13,6 +13,3 @@ class StudyMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudyMember
         fields = ['is_manager', 'id', 'name', 'email', 'birthday', 'cellphone', 'gender', ]
-
-
-
