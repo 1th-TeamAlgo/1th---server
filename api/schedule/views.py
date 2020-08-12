@@ -35,7 +35,8 @@ class ScheduleList(APIView):
             
             요청사양
                 - study : 스터디 id
-                - datetime : 일정 날짜
+                - title : 스터디명
+                - datetime : 일정 날짜 YY-MM-DDTHH-MM
                 - place : 장소
                 - address : 주소
                 - title : 일정 이름

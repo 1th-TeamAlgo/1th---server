@@ -6,7 +6,7 @@ from ..study.models import Study
 class Schedule(models.Model):
     schedule_id = models.AutoField(primary_key=True)
     study = models.ForeignKey(Study, on_delete=models.CASCADE)
-    datetime = models.DateField()
+    datetime = models.DateTimeField()
     place = models.CharField(max_length=20)
     address = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
