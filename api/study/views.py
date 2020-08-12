@@ -150,6 +150,7 @@ class StudyActivity_pictures(APIView):
 
         ---
             요청사양
+                - study: 스터디 번호
                 - path: 파일 경로
         """,
     )
@@ -232,6 +233,7 @@ class StudyActivity_picturesDetail(APIView):
         특정 id를 가진 활동사진 삭제 API
         ---
             요청사항
+                - study : 스터디 번호
                 - path : 파일경로
         """,
     )
@@ -272,6 +274,8 @@ class Study_StudyMember(APIView):
 
         ---
             요청사양
+                -study : 스터디번호
+                -user : 유저번호
                 -is_manager : 운영진인지 아닌지 구분
 
 
@@ -391,7 +395,7 @@ class StudySchedule(APIView):
         ---
             요청사양
                 - study : 스터디 id
-                - datetime : 일정 날짜
+                - datetime : 일정 날짜 YY-MM-DDTHH:MM
                 - place : 장소
                 - address : 주소
                 - title : 일정 이름
