@@ -18,6 +18,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    path('account/', include('wisestudy_app.urls', namespace='accounts')),
+    path('api')
 ]
 
 # swagger 정보 설정, 관련 엔드포인트 추가
