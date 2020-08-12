@@ -8,11 +8,12 @@ from ..schedule.serializers import ScheduleSerializer, ScheduleDeleteSerializer
 from ..schedule.models import Schedule
 from ..activity_picture.serializers import ActivityPictureSerializer,ActivityPictureDeleteSerializer
 from ..activity_picture.models import ActivityPicture
+from ..study_member.serializers import StudyMemberSerializer, StudyMemberDeleteSerializer
+from ..study_member.models import StudyMember
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-
-from ..activity_picture.serializers import ActivityPictureSerializer
 
 
 class StudyList(APIView):
@@ -245,54 +246,114 @@ class StudyActivity_picturesDetail(APIView):
         return get_object_or_404(ActivityPicture, pk=activity_picture_id, study=study)
 
 
-# ## --스터디맴버--
-# class StudyMember(APIView):
-#     @swagger_auto_schema(
-#         responses={200: MemberOfStudySerializer()},
-#         tags=['studies'],
-#         operation_description=
-#         """
-#         스터디 그룹의 특정 id를 가진 스터디 맴버 조회 API
-#
-#         """,
-#     )
-#     # def get(self, request, pk):
-#     #     study_member = self.get_object(pk)
-#     def get(self, request, *args, **kwargs):
-#         study_member = self.get_object(self.kwargs['studies_id'])
-#         serializer = MemberOfStudySerializer(study_member)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-#
-#     # pk에 해당하는  POST 객체 반환
-#     def get_object(self, pk):
-#         return get_object_or_404(Study, pk=pk)
-#
-#
-#     # def get_object(self, pk):
-#     #     return get_object_or_404(Study, pk=pk)
-#
-#     @swagger_auto_schema(
-#         request_body=MemberOfStudySerializer,
-#         responses={201: MemberOfStudySerializer()},
-#         tags=['studies'],
-#         operation_description=
-#         """
-#         스터디 회원 생성 API
-#
-#         ---
-#             요청사양
-#                 -is_manager : 운영진인지 아닌지 구분
-#
-#
-#         """,
-#     )
-#     def post(self, request, pk, format=None):
-#         # study_members = self.get_object(pk)
-#         serializer = MemberOfStudySerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+## --스터디맴버--
+class Study_StudyMember(APIView):
+    @swagger_auto_schema(
+        responses={200: MemberOfStudySerializer()},
+        tags=['StudyMember'],
+        operation_description=
+        """
+        스터디 그룹의 특정 id를 가진 스터디 회원 조회 API
+
+        """,
+    )
+    def get(self, request, *args, **kwargs):
+        study_member = self.get_object(self.kwargs['studies_id'])
+        serializer = MemberOfStudySerializer(study_member)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        request_body=StudyMemberSerializer,
+        responses={201: StudyMemberSerializer()},
+        tags=['StudyMember'],
+        operation_description=
+        """
+        스터디 회원 생성 API
+
+        ---
+            요청사양
+                -is_manager : 운영진인지 아닌지 구분
+
+
+        """,
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = StudyMemberSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
+    # pk에 해당하는 POST 객체 반환
+    def get_object(self, pk):
+        return get_object_or_404(Study, pk=pk)
+
+
+##-- 스터디맴버 디테일--
+class Study_StudyMemberDetail(APIView):
+    @swagger_auto_schema(
+        responses={200: StudyMemberSerializer()},
+        tags=['StudyMember'],
+        operation_description=
+        """
+        특정 id를 가진 회원 조회 API
+        
+            
+        """,
+    )
+    def get(self, request, *args, **kwargs):
+        print("스터디맴버 디테일 시작")
+        study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
+                                      study=self.kwargs['studies_id'])
+        print(study_member)
+        serializer = StudyMemberSerializer(study_member)
+        print(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        responses={200: StudyMemberSerializer()},
+        tags=['StudyMember'],
+        operation_description=
+        """
+        특정 id를 가진 회원 수정 API
+        ---
+            수정 가능한 필드 :
+                - is_manager : 운영진인지 아닌지 구분
+                
+        """,
+    )
+    def put(self, request, *args, **kwargs):
+        study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
+                                   study=self.kwargs['studies_id'])
+
+        serializer = StudyMemberSerializer(study_member, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    @swagger_auto_schema(
+        responses={200: StudyMemberDeleteSerializer()},
+        tags=['StudyMember'],
+        operation_description=
+        """
+        특정 id를 가진 회원 삭제 API
+        ---
+            요청사항
+                - studymember_id : 스터디회원 id
+        """,
+    )
+    def delete(self, request, *args, **kwargs):
+        study_member = self.get_object(study_member_id=self.kwargs['study_members_id'], study=self.kwargs['studies_id'])
+        serializer = StudyMemberDeleteSerializer(study_member)
+        study_member.delete()
+        return Response(data=serializer.data)
+
+    # pk에 해당하는  POST 객체 반환
+    def get_object(self, study, study_member_id):
+        return get_object_or_404(StudyMember, pk=study_member_id, study=study)
+
 
 ## ---스케줄---
 class StudySchedule(APIView):
@@ -348,6 +409,7 @@ class StudySchedule(APIView):
         return get_object_or_404(Study, pk=pk)
 
 
+## --스케줄 디테일--
 class StudyScheduleDetail(APIView):
     @swagger_auto_schema(
         responses={200: ScheduleSerializer()},
@@ -362,7 +424,7 @@ class StudyScheduleDetail(APIView):
         """,
     )
     def get(self, request, *args, **kwargs):
-        print("tudyScheduleDetail")
+        print("ScheduleDetail")
         schedule = self.get_object(schedule_id=self.kwargs['schedules_id'],
                                    study=self.kwargs['studies_id'])
         serializer = ScheduleSerializer(schedule)

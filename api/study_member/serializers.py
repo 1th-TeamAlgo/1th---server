@@ -13,4 +13,10 @@ class StudyMemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudyMember
-        fields = ['is_manager', 'id', 'name', 'email', 'age', 'cellphone', 'gender', 'categories', ]
+        fields = ['study_member_id', 'study', 'user', 'is_manager', 'id', 'name', 'email', 'age', 'cellphone', 'gender', 'categories', ]
+
+
+class StudyMemberDeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudyMember
+        fields = ['study', 'user',]
