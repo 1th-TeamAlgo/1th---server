@@ -15,6 +15,7 @@ class ScheduleList(APIView):
         """
         스케줄 조회 API
    
+    
         """,
     )
     def get(self, request, pk):
@@ -76,11 +77,10 @@ class ScheduleDetail(APIView):
         operation_description=
         """
         특정 id를 가진 스케줄 삭제 API
-        
+
         ---
             요청사항
                 - schedule_id : 스케쥴 id
-
         """,
     )
     def delete(self, request, pk):

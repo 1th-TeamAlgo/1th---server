@@ -14,10 +14,10 @@ INSTALLED_APPS = [
     'rest_framework',
     ## app
     'api',
-
     ##문서 자동화
     'drf_yasg',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

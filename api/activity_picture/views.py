@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-
+# Deprecate
 class APList(APIView):
     @swagger_auto_schema(
         responses={200: ActivityPictureSerializer(many=True)},
