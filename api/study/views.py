@@ -3,8 +3,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
-from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, \
-    Activity_pictureOfStudySerializer
+from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, Activity_pictureOfStudySerializer
 from ..schedule.serializers import ScheduleSerializer, ScheduleDeleteSerializer
 from ..schedule.models import Schedule
 from ..activity_picture.serializers import ActivityPictureSerializer, ActivityPictureDeleteSerializer
