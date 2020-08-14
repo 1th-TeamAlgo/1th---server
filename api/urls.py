@@ -47,7 +47,7 @@ urlpatterns = [
     # path('activity-pictures', activity_picture_views.APList.as_view()),
     # path('activity-pictures/<int:pk>', activity_picture_views.APDetail.as_view()),
 
-    ##카카오 로그인
+    #카카오 로그인
     path('', accounts_views.index, name="index"),
     path('oauth',accounts_views.oauth, name='oauth'),
     path('kakao_login', accounts_views.kakao_login, name='kakao_login'),
