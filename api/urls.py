@@ -34,9 +34,8 @@ urlpatterns = [
     # path('studies/<int:studies_id>/members', study_views.StudyMember.as_view()),
     path('studies/<int:studies_id>/schedules', study_views.StudySchedule.as_view()),
     path('studies/<int:studies_id>/schedules/<int:schedules_id>', study_views.StudyScheduleDetail.as_view()),
-    path('studies/<int:studies_id>/activity_pictures', study_views.StudyActivity_pictures.as_view()),
-    path('studies/<int:studies_id>/activity_pictures/<int:activity_pictures_id>',
-         study_views.StudyActivity_picturesDetail.as_view()),
+    path('studies/<int:studies_id>/pictures', study_views.StudyActivity_pictures.as_view()),
+    path('studies/<int:studies_id>/pictures/<int:activity_pictures_id>', study_views.StudyActivity_picturesDetail.as_view()),
     path('studies/<int:studies_id>/members', study_views.Study_StudyMember.as_view()),
     path('studies/<int:studies_id>/members/<int:study_members_id>', study_views.Study_StudyMemberDetail.as_view()),
 
