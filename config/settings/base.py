@@ -3,6 +3,9 @@ import os
 import datetime
 from django.conf import settings
 
+#카카오로그인
+from ..settings.secret import SECRET_KEY
+
 
 ROOT_URLCONF = 'config.urls'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +24,7 @@ INSTALLED_APPS = [
     ##문서 자동화
     'drf_yasg',
 
-    ##카카오 로그인
+    # ##카카오 로그인
     'rest_framework.authtoken',
     'rest_auth',
 
@@ -34,7 +37,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
 ]
 
-##카카오 로그인 작업중
+# ##카카오 로그인 작업중
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -75,11 +78,11 @@ JWT_AUTH = {
     # 'JWT_AUTH_HEADER_PREFIX': 'JWT',
     # 'JWT_AUTH_COOKIE': None,
 
-    'JWT_SECRET_KEY': settings.SECRET_KEY,
+    'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_ALGORITHM': 'HS256',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
 
 }
 

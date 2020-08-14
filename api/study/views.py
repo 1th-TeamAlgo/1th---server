@@ -3,10 +3,10 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
-from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer,Activity_pictureOfStudySerializer
+from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, Activity_pictureOfStudySerializer
 from ..schedule.serializers import ScheduleSerializer, ScheduleDeleteSerializer
 from ..schedule.models import Schedule
-from ..activity_picture.serializers import ActivityPictureSerializer,ActivityPictureDeleteSerializer
+from ..activity_picture.serializers import ActivityPictureSerializer, ActivityPictureDeleteSerializer
 from ..activity_picture.models import ActivityPicture
 from ..study_member.serializers import StudyMemberSerializer, StudyMemberDeleteSerializer
 from ..study_member.models import StudyMember
@@ -104,6 +104,7 @@ class StudyDetail(APIView):
     #     serializer = StudyDetailSerializer(study_member)
     #     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 ## --활동사진--
 class StudyActivity_pictures(APIView):
     @swagger_auto_schema(
@@ -129,6 +130,7 @@ class StudyActivity_pictures(APIView):
         serializer = Activity_pictureOfStudySerializer(study_activity_picture)
         print(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
     # def get(self, request, pk):
     #     activity_pictures = self.get_object(pk)
     #     serializer = Activity_pictureOfStudySerializer(activity_pictures)
@@ -197,7 +199,7 @@ class StudyActivity_picturesDetail(APIView):
     def get(self, request, *args, **kwargs):
         print("StudyActivity_picturesDetail GETs")
         activity_picture = self.get_object(activity_picture_id=self.kwargs['activity_pictures_id'],
-                                   study=self.kwargs['studies_id'])
+                                           study=self.kwargs['studies_id'])
         serializer = ActivityPictureSerializer(activity_picture)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -216,7 +218,7 @@ class StudyActivity_picturesDetail(APIView):
     )
     def put(self, request, *args, **kwargs):
         activity_picture = self.get_object(activity_picture_id=self.kwargs['activity_pictures_id'],
-                                   study=self.kwargs['studies_id'])
+                                           study=self.kwargs['studies_id'])
 
         serializer = ActivityPictureSerializer(activity_picture, data=request.data)
 
@@ -238,7 +240,8 @@ class StudyActivity_picturesDetail(APIView):
         """,
     )
     def delete(self, request, *args, **kwargs):
-        activity_picture = self.get_object(activity_picture_id=self.kwargs['activity_pictures_id'], study=self.kwargs['studies_id'])
+        activity_picture = self.get_object(activity_picture_id=self.kwargs['activity_pictures_id'],
+                                           study=self.kwargs['studies_id'])
         serializer = ActivityPictureDeleteSerializer(activity_picture)
         activity_picture.delete()
         return Response(data=serializer.data)
@@ -308,7 +311,7 @@ class Study_StudyMemberDetail(APIView):
     def get(self, request, *args, **kwargs):
         print("스터디맴버 디테일 시작")
         study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
-                                      study=self.kwargs['studies_id'])
+                                       study=self.kwargs['studies_id'])
         print(study_member)
         serializer = StudyMemberSerializer(study_member)
         print(serializer)
@@ -328,7 +331,7 @@ class Study_StudyMemberDetail(APIView):
     )
     def put(self, request, *args, **kwargs):
         study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
-                                   study=self.kwargs['studies_id'])
+                                       study=self.kwargs['studies_id'])
 
         serializer = StudyMemberSerializer(study_member, data=request.data)
 
