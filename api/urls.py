@@ -55,4 +55,4 @@ urlpatterns = [
     path('', accounts_views.index, name="index"),
     path('oauth',accounts_views.oauth, name='oauth'),
     path('oauth/token',accounts_views.oauth, name='oauth'),
-
+]
