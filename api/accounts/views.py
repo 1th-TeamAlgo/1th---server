@@ -8,9 +8,10 @@ from rest_auth.registration.views import SocialLoginView
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
 
+
 def index(request):
     print("##### Func -> index #####")
-    return render(request,'index.html',{})
+    return render(request, 'index.html', {})
 
 
 def oauth(request):
@@ -41,10 +42,9 @@ def oauth(request):
 
     print(type(json_data))
     for key, value in json_data.items():
-        print("key -> {} \n value -> {}".format(key,value))
+        print("key -> {} \n value -> {}".format(key, value))
     print("##### access_token #####")
     print(access_token)
-
 
     print("##### 사용자 정보 얻어 보기 #####")
     user_profile_info_uri = "https://kapi.kakao.com/v2/user/me"
@@ -68,11 +68,10 @@ def kakao_login(request):
     # Host: kauth.kakao.com
 
     host = "https://kauth.kakao.com"
-    login_request_uri = host+"/oauth/authorize?"
+    login_request_uri = host + "/oauth/authorize?"
 
     client_id = 'be8d497f71f0e2427a73ffe6a8b93b9d'
     redirect_uri = 'http://127.0.0.1:8000/oauth'
-
 
     login_request_uri += 'client_id=' + client_id
     login_request_uri += '&redirect_uri=' + redirect_uri

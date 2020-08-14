@@ -13,14 +13,22 @@ from drf_yasg import openapi
 # router = routers.DefaultRouter(trailing_slash= False)
 # router.register('aps',APIView)
 
+##카카오 로그인
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
+
 urlpatterns = [
     # url(r'^', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    path('account/', include('wisestudy_app.urls', namespace='accounts')),
-    path('api')
+    ##카카오 로그인
+    path('', include('api.urls')),
+    path('account/', include('api.urls', namespace='accounts')),
+    path('api-jwt-auth/', obtain_jwt_token),
+    path('api-jwt-auth/refresh/', refresh_jwt_token),
+    path('api-jwt-auth/', verify_jwt_token),
+    path('rest-auth', include('rest_auth.urls')),
 ]
 
 # swagger 정보 설정, 관련 엔드포인트 추가

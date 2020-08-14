@@ -32,7 +32,10 @@ class StudyDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Study
         fields = ['study_id', 'category', 'title', 'limit', 'description', 'study_members', 'study_activity_picture_list', ]
-        # fields = ['study_id', 'category', 'title', 'limit', 'description', 'study_members', ]
+
+    # class Meta:
+    #     model = Study
+    #     fields = ['study', 'study_members', 'study_activity_picture_list', ]
 
         # def get_object_with_picture(self, obj):
         #     activity_pictures = obj
