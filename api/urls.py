@@ -5,6 +5,7 @@ from .schedule import views as schedule_views  # 일정
 
 from api.accounts import views as accounts_views  # 카카오로그인
 from .signup import views as signup_vies
+
 app_name = 'accounts'
 
 urlpatterns = [
