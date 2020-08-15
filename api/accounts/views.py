@@ -4,6 +4,7 @@ import jwt
 from config.settings.secret import SECRET_KEY
 from rest_framework.response import Response
 from django.http import JsonResponse
+from ..user.models import User
 
 import json
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
@@ -12,6 +13,7 @@ from rest_auth.registration.views import SocialLoginView
 
 # class KakaoLogin(SocialLoginView):
 #     adapter_class = KakaoOAuth2Adapter
+from ..user.serializers import UserSerializer
 
 
 def index(request):
@@ -23,7 +25,7 @@ def oauth(request):
     print("##### Func -> oauth #####")
     access_token = request.META['HTTP_KAKAO_ACCESS_TOKEN']
     # code -> authorize_code
-    print('code = ' + str(access_token))
+    print('access_token = ' + str(access_token))
 
     print("##### 사용자 정보 얻어 보기 #####")
     user_profile_info_uri = "https://kapi.kakao.com/v2/user/me"
@@ -34,6 +36,17 @@ def oauth(request):
     user_json_data = user_profile_info_uri_data.json()
 
     kakao_account = user_json_data['kakao_account']
+
+    email = kakao_account['email']
+    gender = kakao_account['gender']
+
+    data2 = {
+        'email': email,
+        'gender': gender,
+    }
+    print(data2)
+
+    # kakao_account = user_json_data['kakao_account']
     nickname = kakao_account['profile']['nickname']
     email = kakao_account['email']
     birthday = kakao_account['birthday']
