@@ -42,22 +42,22 @@ class KakaoAccount(APIView):
         kakao_account = user_json_data['kakao_account']
         nickname = kakao_account['profile']['nickname']
         email = kakao_account['email']
-        birthday = kakao_account['birthday']
+        # birthday = kakao_account['birthday']
 
-        gender = kakao_account['gender']
+        # gender = kakao_account['gender']
 
         data = {
             "nickname": nickname,
             'email': email,
-            'birthday': birthday
+            # 'birthday': birthday
         }
         print(data)
 
-        data2 = {
-            'email': email,
-            'gender': gender
-        }
-        print(data2)
+        # data2 = {
+        #     'email': email,
+        #     'gender': gender
+        # }
+        # print(data2)
 
         user_jwt = self.user_jwt(data)
         print(user_jwt)
