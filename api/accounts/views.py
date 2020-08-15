@@ -7,7 +7,6 @@ from config.settings.secret import SECRET_KEY
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from ..user.models import User
 
 import json
 
@@ -17,7 +16,6 @@ class KakaoAccount(APIView):
     dummy_jwt = {
         "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ ... 3XirwWnsXXrq0c3PMhRLEz5mFqbz2S2r_QxEM2Q"
     }
-from ..user.serializers import UserSerializer
 
     @swagger_auto_schema(
         responses={200: json.dumps(dummy_jwt)},
@@ -25,7 +23,6 @@ from ..user.serializers import UserSerializer
         operation_description=
         """
         Kakao access token으로 jwt 발급
-
         """,
     )
     def get(self, request, format=None):
