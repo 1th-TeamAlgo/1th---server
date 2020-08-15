@@ -4,7 +4,7 @@ from .study import views as study_views  # 스터디
 from .schedule import views as schedule_views  # 일정
 
 from api.accounts import views as accounts_views  # 카카오로그인
-from api.accounts.views import KakaoLogin
+# from api.accounts.views import KakaoLogin
 
 app_name = 'accounts'
 
@@ -50,8 +50,8 @@ urlpatterns = [
     #카카오 로그인
     path('', accounts_views.index, name="index"),
     path('oauth',accounts_views.oauth, name='oauth'),
-    path('kakao_login', accounts_views.kakao_login, name='kakao_login'),
-    path('kakao_logout', accounts_views.kakao_logout, name='kakao_logout'),
-
-    path('rest-auth/kakao/', KakaoLogin.as_view(), name='kakao_login2'),
+    # path('kakao_login', accounts_views.kakao_login, name='kakao_login'),
+    # path('kakao_logout', accounts_views.kakao_logout, name='kakao_logout'),
+    #
+    # path('rest-auth/kakao/', KakaoLogin.as_view(), name='kakao_login2'),
 ]
