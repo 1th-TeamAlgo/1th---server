@@ -24,10 +24,6 @@ class StudySerializer(serializers.ModelSerializer):
 class StudyDetailSerializer(serializers.ModelSerializer):
     # study_members = StudyMemberSerializer(source='studymember_set', many=True, read_only=True)
     # study_activity_picture_list = ActivityPictureSerializer(source='activitypicture_set', many=True)
-    # activity_picture_list = Activity_pictureOfStudySerializer(source='activitypicture_set', many=True, read_only=True)
-
-    # category_name = serializers.ReadOnlyField(source='category.name')
-    # activity_pictures = ActivityPictureSerializer(many=True, read_only=True)
 
     class Meta:
         model = Study
