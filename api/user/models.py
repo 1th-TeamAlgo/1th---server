@@ -10,6 +10,7 @@ class User(models.Model):
     age = models.IntegerField(null=True)
     cellphone = models.CharField(max_length=20, null=True)
     gender = models.CharField(max_length=6)
+    description = models.CharField(max_length=1024, null=True)
     categories = models.CharField(max_length=1024, null=True)
 
     def __str__(self):

@@ -7,7 +7,7 @@ from ..study_member.models import StudyMember
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'categories']
+        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories']
 
 
 class UserStudySerializer(serializers.ModelSerializer):
@@ -24,6 +24,6 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'categories', 'study_list']
+        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories', 'study_list']
 
 

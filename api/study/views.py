@@ -64,7 +64,7 @@ class StudyList(APIView):
                 - category : 카테고리 이름
                 - title : 스터디 이름
                 - limit : 인원 제한
-                - descriptions : 스터디 소개
+                - description : 스터디 소개
         """,
     )
     def post(self, request):

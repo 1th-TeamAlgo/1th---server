@@ -35,9 +35,11 @@ class UserList(APIView):
             요청사양
                 - email : 이메일
                 - name : 이름
-                - birthday : 생년월일
+                - age : 나이
                 - cellphone : 휴대폰 번호
                 - gender : 성별
+                - description : 소개
+                - categories : 관심분야
         """,
     )
     def post(self, request):
