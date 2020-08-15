@@ -23,7 +23,6 @@ class KakaoAccount(APIView):
         operation_description=
         """
         Kakao access token으로 jwt 발급
-
         """,
     )
     def get(self, request, format=None):
@@ -45,6 +44,8 @@ class KakaoAccount(APIView):
         email = kakao_account['email']
         # birthday = kakao_account['birthday']
 
+        # gender = kakao_account['gender']
+
         data = {
             "nickname": nickname,
             'email': email,
@@ -52,9 +53,16 @@ class KakaoAccount(APIView):
         }
         print(data)
 
+        # data2 = {
+        #     'email': email,
+        #     'gender': gender
+        # }
+        # print(data2)
+
         user_jwt = self.user_jwt(data)
         print(user_jwt)
         return user_jwt
+
 
     def user_jwt(self, data):
         jwt_token = jwt.encode(data, SECRET_KEY, algorithm='HS256').decode('utf-8')
