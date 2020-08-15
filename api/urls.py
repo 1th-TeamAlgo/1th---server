@@ -4,11 +4,16 @@ from .study import views as study_views  # 스터디
 from .schedule import views as schedule_views  # 일정
 
 from api.accounts import views as accounts_views  # 카카오로그인
-# from api.accounts.views import KakaoLogin
+from .accounts import views as kakao_account
+from .signup import views as signup_vies
 
 app_name = 'accounts'
 
 urlpatterns = [
+    ## 안드에 jwt 없으면 회원 가입으로 넘어온다고 했음 ##
+    ## 회원가입 api ##
+    path('signup', signup_vies.UserSignUp.as_view()),
+
     ## users ##
     path('users', user_views.UserList.as_view()),
     path('users/<int:pk>', user_views.UserDetail.as_view()),
@@ -48,7 +53,5 @@ urlpatterns = [
     # path('activity-pictures/<int:pk>', activity_picture_views.APDetail.as_view()),
 
     #카카오 로그인
-    path('', accounts_views.index, name="index"),
-    path('oauth/token',accounts_views.oauth, name='oauth'),
-
+    path('oauth/token',kakao_account.KakaoAccount.as_view(), name='kakao_account'),
 ]

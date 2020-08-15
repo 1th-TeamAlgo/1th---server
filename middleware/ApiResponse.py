@@ -1,5 +1,4 @@
 import re
-from rest_framework.status import is_client_error
 
 
 class ResponseFormattingMiddleware:
