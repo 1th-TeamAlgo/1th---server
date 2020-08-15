@@ -49,7 +49,7 @@ urlpatterns = [
 
     #카카오 로그인
     path('', accounts_views.index, name="index"),
-    path('oauth',accounts_views.oauth, name='oauth'),
+    path('oauth/token',accounts_views.oauth, name='oauth'),
     # path('kakao_login', accounts_views.kakao_login, name='kakao_login'),
     # path('kakao_logout', accounts_views.kakao_logout, name='kakao_logout'),
     #
