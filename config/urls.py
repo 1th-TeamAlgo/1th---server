@@ -22,13 +22,13 @@ urlpatterns = [
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    ##카카오 로그인
-    path('', include('api.urls')),
-    path('account/', include('api.urls', namespace='accounts')),
-    path('api-jwt-auth/', obtain_jwt_token),
-    path('api-jwt-auth/refresh/', refresh_jwt_token),
-    path('api-jwt-auth/verify/', verify_jwt_token),
-    path('rest-auth', include('rest_auth.urls')),
+    # ##카카오 로그인
+    # path('', include('api.urls')),
+    # path('account/', include('api.urls', namespace='accounts')),
+    # path('api-jwt-auth/', obtain_jwt_token),
+    # path('api-jwt-auth/refresh/', refresh_jwt_token),
+    # path('api-jwt-auth/verify/', verify_jwt_token),
+    # path('rest-auth', include('rest_auth.urls')),
 ]
 
 # swagger 정보 설정, 관련 엔드포인트 추가
