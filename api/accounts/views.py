@@ -38,19 +38,22 @@ class KakaoAccount(APIView):
         user_profile_info_uri_data = requests.post(user_profile_info_uri,
                                                    headers={'Authorization': f"Bearer ${access_token}"})
         user_json_data = user_profile_info_uri_data.json()
+        print(user_json_data)
 
         kakao_account = user_json_data['kakao_account']
         nickname = kakao_account['profile']['nickname']
         email = kakao_account['email']
-        birthday = kakao_account['birthday']
+        # birthday = kakao_account['birthday']
 
         data = {
             "nickname": nickname,
             'email': email,
-            'birthday': birthday
+            # 'birthday': birthday
         }
+        print(data)
 
         user_jwt = self.user_jwt(data)
+        print(user_jwt)
         return user_jwt
 
     def user_jwt(self, data):
