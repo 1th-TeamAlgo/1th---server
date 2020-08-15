@@ -34,6 +34,7 @@ class UserList(APIView):
         ---
             요청사양
                 - email : 이메일
+                - password : 비밀번호
                 - name : 이름
                 - age : 나이
                 - cellphone : 휴대폰 번호
