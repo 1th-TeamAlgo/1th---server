@@ -81,25 +81,36 @@ class KakaoAccount(APIView):
         nickname = kakao_account['profile']['nickname']
         email = kakao_account['email']
 
+        is_user = User.objects.filter(email=email)
+        is_user_len = len(is_user)
 
-        ### 새로운 user model 생성 부분 ###
+        print("IF 들어가기전")
+        if len(is_user) == 0:
+            ### 새로운 user model 생성 부분 ###
+            print("새로운 user model")
 
-        new_user = User(name=nickname, email=email)
-        new_user.save()
-        new_user_serailizer = UserSerializer(new_user)
+            new_user = User(name=nickname, email=email)
+            new_user.save()
+            user_serailizer = UserSerializer(new_user)
+
+        else :
+            ### 기존 user model ###
+            print("기존 user model")
+            is_user = is_user.values()
+            user_serailizer = UserSerializer(is_user[0])
+            print(user_serailizer.data)
 
         data = {
-            'user_id': new_user_serailizer.data['user_id'],
+            'user_id': user_serailizer.data['user_id'],
             "nickname": nickname,
             'email': email,
         }
 
-        print(data)
         jwt_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM).decode('utf-8')
 
         data = {
             "jwt": jwt_token,
-            "user": new_user_serailizer.data
+            "user": user_serailizer.data
         }
 
         return data
