@@ -18,7 +18,7 @@ class ScheduleList(APIView):
     
         """,
     )
-    def get(self, request, pk):
+    def get(self, request):
         schedule = Schedule.objects.all()
         serializer = ScheduleSerializer(schedule, many=True)
         return Response(serializer.data)
@@ -35,11 +35,8 @@ class ScheduleList(APIView):
             
             요청사양
                 - study : 스터디 id
-                - title : 스터디명
                 - datetime : 일정 날짜 YY-MM-DDTHH-MM
                 - place : 장소
-                - address : 주소
-                - title : 일정 이름
                 - description : 일정 소개 
     
         """,

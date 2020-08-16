@@ -400,8 +400,6 @@ class StudySchedule(APIView):
                 - study : 스터디 id
                 - datetime : 일정 날짜 YY-MM-DDTHH:MM
                 - place : 장소
-                - address : 주소
-                - title : 일정 이름
                 - description : 일정 소개 
         """,
     )
@@ -448,8 +446,6 @@ class StudyScheduleDetail(APIView):
             수정 가능한 필드 :
                 - datetime : 스케쥴 날짜
                 - place : 스케쥴 장소
-                - address : 스케쥴 주소
-                - title : 스케쥴 제목
                 - description : 스케쥴 설명
         """,
     )
