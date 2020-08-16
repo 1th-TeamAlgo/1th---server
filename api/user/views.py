@@ -29,7 +29,8 @@ class UserList(APIView):
         user_payload = self.jwt_get_payload(request)
         pk = user_payload['user_id']
         user = self.get_object(pk)
-        serializer = UserSerializer(user)
+        print(user)
+        serializer = UserDetailSerializer(user)
         return Response(serializer.data)
 
 
