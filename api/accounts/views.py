@@ -17,7 +17,24 @@ class KakaoAccount(APIView):
     renderer_classes = [JSONRenderer]
 
     dummy_jwt = {
-        "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ ... 3XirwWnsXXrq0c3PMhRLEz5mFqbz2S2r_QxEM2Q"
+        "code": 200,
+
+        "status": "OK",
+
+        "message": {
+
+            "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ ... 3XirwWnsXXrq0c3PMhRLEz5mFqbz2S2r_QxEM2Q",
+            "user": {
+                "user_id": 141,
+                "email": "mynamewoon@kakao.com",
+                "name": "이운기",
+                "age": "null",
+                "cellphone": "null",
+                "gender": "",
+                "description": "null",
+                "categories": "null"
+            }
+        }
     }
 
     @swagger_auto_schema(
@@ -26,6 +43,8 @@ class KakaoAccount(APIView):
         operation_description=
         """
         Kakao access token으로 jwt 발급
+        
+        ---
         
         Header : kakao-access-token
         """,
