@@ -16,7 +16,7 @@ urlpatterns = [
 
     ## users ##
     path('users', user_views.UserList.as_view()),
-    path('users/<int:pk>', user_views.UserDetail.as_view()),
+    #path('users/<int:pk>', user_views.UserDetail.as_view()),
 
     # categorys(deprecate) ##
     # path('categories', category_views.CategoryList.as_view()),
