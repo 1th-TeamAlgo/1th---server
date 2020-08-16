@@ -35,7 +35,7 @@ class UserList(APIView):
         operation_description=
         """      
         회원 생성 API
-        
+
         ---
             요청사양
                 - email : 이메일
@@ -55,6 +55,33 @@ class UserList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @swagger_auto_schema(
+        request_body=UserSerializer,
+        responses={201: UserSerializer()},
+        tags=['users'],
+        operation_description=
+        """
+        특정 id를 가진 회원 수정 API
+
+        """,
+    )
+    def put(self, request):
+        user_jwt = request.META['HTTP_KAKAO_ACCESS_TOKEN']
+        user_payload = jwt.decode(user_jwt, SECRET_KEY, algorithm=ALGORITHM)
+        print("######################")
+        print(user_payload['user_id'])
+        print(type(user_payload['user_id']))
+        pk = user_payload['user_id']
+        print(pk)
+        print("######################")
+        user = self.get_object(pk)
+
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def options(self, request, *args, **kwargs):
         if self.metadata_class is None:
             return self.http_method_not_allowed(request, *args, **kwargs)
@@ -62,6 +89,8 @@ class UserList(APIView):
         data = self.metadata_class().determine_metadata(request, self)
         return Response({'a': 'a'}, status=status.HTTP_200_OK)
 
+    def get_object(self, pk):
+        return get_object_or_404(User, pk=pk)
 
 class UserDetail(APIView):
     @swagger_auto_schema(
@@ -70,7 +99,7 @@ class UserDetail(APIView):
         operation_description=
         """
         특정 id를 가진 회원 조회 API
-        
+
         """,
     )
     def get(self, request, pk, format=None):
