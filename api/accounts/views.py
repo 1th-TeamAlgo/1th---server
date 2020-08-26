@@ -110,7 +110,7 @@ class KakaoAccount(APIView):
 
         data = {
             "jwt": jwt_token,
-            "user": user_serailizer.data
+            #"user": user_serailizer.data
         }
 
         return data
