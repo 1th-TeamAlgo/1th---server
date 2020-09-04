@@ -14,6 +14,6 @@ class User(models.Model):
     categories = models.CharField(max_length=1024, null=True)
     kakao_profile_img = models.CharField(max_length=1024,null=True)
     s3_profile_img = models.FileField()
-    img_flag = models.BooleanField(default=True)
+    img_flag = models.BooleanField(default=False)
     def __str__(self):
         return self.name
