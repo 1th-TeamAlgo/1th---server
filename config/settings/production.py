@@ -15,16 +15,28 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wisedb',
-        'USER': 'root',
-        'PASSWORD': 'schwisestudy',
-        'HOST': 'wisedb.cinqw7ouyrxc.ap-northeast-2.rds.amazonaws.com',
+        'USER': 'b07cec7fd5b708',
+        'PASSWORD': '527ea9e5',
+        'HOST': 'us-cdbr-east-02.cleardb.com',
         'PORT': 3306,
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
         }
     }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'wisedb',
+#         'USER': 'root',
+#         'PASSWORD': 'schwisestudy',
+#         'HOST': 'wisedb.cinqw7ouyrxc.ap-northeast-2.rds.amazonaws.com',
+#         'PORT': 3306,
+#         'OPTIONS': {
+#             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+#         }
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
