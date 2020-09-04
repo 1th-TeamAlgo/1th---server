@@ -28,7 +28,7 @@ MIDDLEWARE += [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wisedb',
+        'NAME': 'heroku_035143528b9d6cc',
         'USER': 'b5d1e551889167',
         'PASSWORD': 'b5d1e551889167',
         'HOST': 'us-cdbr-east-02.cleardb.com',
