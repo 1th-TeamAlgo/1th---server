@@ -23,9 +23,9 @@ DATABASES = {
         'PASSWORD': '527ea9e5',
         'HOST': 'us-cdbr-east-02.cleardb.com',
         'PORT': 3306,
-        # 'OPTIONS': {
-        #     'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
-        # }
+        'OPTIONS': {
+            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+        }
     }
 }
 
