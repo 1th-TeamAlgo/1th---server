@@ -24,16 +24,6 @@ class KakaoAccount(APIView):
         "message": {
 
             "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ ... 3XirwWnsXXrq0c3PMhRLEz5mFqbz2S2r_QxEM2Q",
-            "user": {
-                "user_id": 141,
-                "email": "mynamewoon@kakao.com",
-                "name": "이운기",
-                "age": "null",
-                "cellphone": "null",
-                "gender": "",
-                "description": "null",
-                "categories": "null"
-            }
         }
     }
 
@@ -80,7 +70,7 @@ class KakaoAccount(APIView):
         kakao_account = user_json_data['kakao_account']
         nickname = kakao_account['profile']['nickname']
         email = kakao_account['email']
-
+        kakao_profile_img = kakao_account['profile']['profile_image_url']
         is_user = User.objects.filter(email=email)
         is_user_len = len(is_user)
 
@@ -89,14 +79,16 @@ class KakaoAccount(APIView):
             ### 새로운 user model 생성 부분 ###
             print("새로운 user model")
 
-            new_user = User(name=nickname, email=email)
+            new_user = User(name=nickname, email=email, profile_img=kakao_profile_img)
             new_user.save()
             user_serailizer = UserSerializer(new_user)
 
-        else :
+        else:
             ### 기존 user model ###
             print("기존 user model")
+
             is_user = is_user.values()
+            print(is_user)
             user_serailizer = UserSerializer(is_user[0])
             print(user_serailizer.data)
 
@@ -110,7 +102,7 @@ class KakaoAccount(APIView):
 
         data = {
             "jwt": jwt_token,
-            #"user": user_serailizer.data
+            # "user": user_serailizer.data
         }
 
         return data

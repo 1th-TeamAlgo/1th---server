@@ -7,7 +7,8 @@ from ..study_member.models import StudyMember
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories']
+        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories',
+                  'kakao_profile_img','s3_profile_img','img_flag',]
 
 
 class UserStudySerializer(serializers.ModelSerializer):
@@ -24,6 +25,5 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories', 'study_list']
-
-
+        fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories', 'study_list',
+                  'kakao_profile_img','s3_profile_img','img_flag',]

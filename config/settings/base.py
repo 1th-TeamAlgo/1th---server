@@ -24,81 +24,10 @@ INSTALLED_APPS = [
     ##문서 자동화
     'drf_yasg',
 
-    # ##카카오 로그인
-    'rest_framework.authtoken',
-    'rest_auth',
-
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.kakao',
+    ## aws S3 이용
+    'storages',
 ]
 
-# ##카카오 로그인 작업중
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        ],
-}
-
-JWT_AUTH = {
-    # 'JWT_ENCODE_HANDLER':
-    # 'rest_framework_jwt.utils.jwt_encode_handler',
-    #
-    # 'JWT_DECODE_HANDLER':
-    # 'rest_framework_jwt.utils.jwt_decode_handler',
-    #
-    # 'JWT_PAYLOAD_HANDLER':
-    # 'rest_framework_jwt.utils.jwt_payload_handler',
-    #
-    # 'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-    # 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-    #
-    # 'JWT_RESPONSE_PAYLOAD_HANDLER':
-    # 'rest_framework_jwt.utils.jwt_response_payload_handler',
-    #
-    # 'JWT_SECRET_KEY': settings.SECRET_KEY,
-    # 'JWT_GET_USER_SECRET_KEY': None,
-    # 'JWT_PUBLIC_KEY': None,
-    # 'JWT_PRIVATE_KEY': None,
-    # 'JWT_ALGORITHM': 'HS256',
-    # 'JWT_VERIFY': True,
-    # 'JWT_VERIFY_EXPIRATION': True,
-    # 'JWT_LEEWAY': 0,
-    # 'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
-    # 'JWT_AUDIENCE': None,
-    # 'JWT_ISSUER': None,
-    #
-    # 'JWT_ALLOW_REFRESH': True,
-    # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    #
-    # 'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    # 'JWT_AUTH_COOKIE': None,
-
-    'JWT_SECRET_KEY': SECRET_KEY,
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=365),
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
-
-}
-
-REST_USE_JWT = True
-
-SITE_ID = 1
-
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_EMAIL_REQUIRED = False
-SOCIALACCOUNT_QUERY_EMAIL = True
-##카카오 로그인 작업 구간 여기까찌
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -145,6 +74,22 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# AWS S3
+
+AWS_ACCESS_KEY_ID = 'AKIAWVQALOFDSUFI567Q' # .csv 파일에 있는 내용을 입력 Access key ID
+AWS_SECRET_ACCESS_KEY = '27Wdf+cuhopaNy/F+BQhpYS1+DVr/6TVN0ZoeAlJ' # .csv 파일에 있는 내용을 입력 Secret access key
+AWS_REGION = 'ap-northeast-2'
+
+###S3 Storages
+AWS_STORAGE_BUCKET_NAME = 'wise-study-bucket' # 설정한 버킷 이름
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 LANGUAGE_CODE = 'ko-kr'
 
