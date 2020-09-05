@@ -71,6 +71,7 @@ class KakaoAccount(APIView):
         nickname = kakao_account['profile']['nickname']
         email = kakao_account['email']
         kakao_profile_img = kakao_account['profile']['profile_image_url']
+        print(kakao_profile_img)
         is_user = User.objects.filter(email=email)
         is_user_len = len(is_user)
 
@@ -79,7 +80,7 @@ class KakaoAccount(APIView):
             ### 새로운 user model 생성 부분 ###
             print("새로운 user model")
 
-            new_user = User(name=nickname, email=email, profile_img=kakao_profile_img)
+            new_user = User(name=nickname, email=email, kakao_profile_img=kakao_profile_img)
             new_user.save()
             user_serailizer = UserSerializer(new_user)
 
