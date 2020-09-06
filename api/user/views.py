@@ -6,6 +6,7 @@ from .serializers import UserSerializer, UserDetailSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.exceptions import ParseError
 
 from config.settings.secret import SECRET_KEY, ALGORITHM
 
@@ -32,7 +33,6 @@ class UserList(APIView):
         print(user)
         serializer = UserDetailSerializer(user)
         return Response(serializer.data)
-
 
     @swagger_auto_schema(
         request_body=UserSerializer,
@@ -101,6 +101,10 @@ class UserList(APIView):
         return get_object_or_404(User, pk=pk)
 
     def jwt_get_payload(self, request):
-        user_jwt = request.META['HTTP_X_JWT_TOKEN']
-        user_payload = jwt.decode(user_jwt, SECRET_KEY, algorithm=ALGORITHM)
-        return user_payload
+        try:
+            user_jwt = request.META['HTTP_X_JWT_TOKEN']
+            user_payload = jwt.decode(user_jwt, SECRET_KEY, algorithm=ALGORITHM)
+            return user_payload
+
+        except (KeyError, jwt.DecodeError):
+            raise ParseError(detail="NO_JWT_TOKEN")
