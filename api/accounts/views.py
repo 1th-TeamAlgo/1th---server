@@ -7,7 +7,7 @@ from config.settings.secret import SECRET_KEY, ALGORITHM
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import APIException
+from rest_framework.exceptions import ParseError
 
 import json
 from ..user.models import User
@@ -63,7 +63,7 @@ class KakaoAccount(APIView):
 
         except KeyError:
             print("Asdfsdf")
-            raise APIException("NO_ACCESS_TOKEN")
+            raise ParseError(detail="NO_ACCESS_TOKEN")
 
     def make_payload(self, user_json_data):
         print("############ make_payload ############")
