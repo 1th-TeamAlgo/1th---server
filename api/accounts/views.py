@@ -7,6 +7,7 @@ from config.settings.secret import SECRET_KEY, ALGORITHM
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import APIException
 
 import json
 from ..user.models import User
@@ -50,14 +51,19 @@ class KakaoAccount(APIView):
         print("############ get_kakao_account ############")
         user_profile_info_uri = "https://kapi.kakao.com/v2/user/me"
         print(user_profile_info_uri)
-        user_profile_info_uri_data = requests.post(user_profile_info_uri,
-                                                   headers={'Authorization': f"Bearer ${access_token}"})
-        user_json_data = user_profile_info_uri_data.json()
-        print(user_json_data)
+        try:
+            user_profile_info_uri_data = requests.post(user_profile_info_uri,
+                                                       headers={'Authorization': f"Bearer ${access_token}"})
+            user_json_data = user_profile_info_uri_data.json()
+            print(user_json_data)
 
-        new_user_payload = self.make_payload(user_json_data)
+            new_user_payload = self.make_payload(user_json_data)
 
-        return new_user_payload
+            return new_user_payload
+
+        except KeyError:
+            print("Asdfsdf")
+            raise APIException("NO_ACCESS_TOKEN")
 
     def make_payload(self, user_json_data):
         print("############ make_payload ############")

@@ -90,6 +90,11 @@ AWS_S3_OBJECT_PARAMETERS = {
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+### REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
+}
+
 
 LANGUAGE_CODE = 'ko-kr'
 
