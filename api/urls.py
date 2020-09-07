@@ -6,6 +6,7 @@ from .schedule import views as schedule_views  # 일정
 from api.accounts import views as accounts_views  # 카카오로그인
 from .accounts import views as kakao_account
 from .signup import views as signup_vies
+from .img_upload_test import views as image_upload_test_view
 
 app_name = 'accounts'
 
@@ -54,4 +55,8 @@ urlpatterns = [
 
     #카카오 로그인
     path('oauth/token',kakao_account.KakaoAccount.as_view(), name='kakao_account'),
+
+
+    ## 운기형 image upload 테스트
+    path('test',image_upload_test_view.TestImageList.as_view()),
 ]
