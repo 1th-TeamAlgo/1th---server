@@ -15,7 +15,7 @@ import jwt
 
 class UserList(APIView):
     @swagger_auto_schema(
-        responses={200: UserSerializer(many=True)},
+        responses={200: UserDetailSerializer(many=True)},
         tags=['users'],
         operation_description=
         """
