@@ -52,9 +52,9 @@ class UserList(APIView):
         
         s3_profile_img 는 사용자가 직업 올린 프로필 사진의 링크 이다.
         
-        구분을 위해서 img_flag를 추가 하였고 False면 kakao_profile을 사용중
+        구분을 위해서 img_flag를 추가 하였고 True면 kakao_profile을 사용중
         
-        img_flag 가 True면 사용자가 직접 올린 사진을 사용하겠다는 뜻 이다.
+        img_flag 가 False면 사용자가 직접 올린 사진을 사용하겠다는 뜻 이다.
 
         ---
 
