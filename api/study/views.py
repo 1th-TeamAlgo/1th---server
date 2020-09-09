@@ -89,10 +89,6 @@ class StudyList(APIView):
     def post(self, request):
         serializer = StudyAddSerializer(data=request.data)
         if serializer.is_valid():
-            # study = serializer.save(commit=False)
-            # study.category = request.category
-            # study.save()
-            # return redirect(study)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
