@@ -27,3 +27,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
         model = User
         fields = ['user_id', 'email', 'name', 'age', 'cellphone', 'gender', 'description', 'categories', 'study_list',
                   'kakao_profile_img','s3_profile_img','img_flag',]
+
+class UserImageUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['s3_profile_img','img_flag']

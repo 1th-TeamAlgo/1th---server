@@ -17,6 +17,9 @@ urlpatterns = [
 
     ## users ##
     path('users', user_views.UserList.as_view()),
+    ## profile 이미지 변경할때 사용하는 api
+    path('users/image',image_upload_test_view.TestImageList.as_view()),
+
     #path('users/<int:pk>', user_views.UserDetail.as_view()),
 
     # categorys(deprecate) ##
@@ -58,5 +61,5 @@ urlpatterns = [
 
 
     ## 운기형 image upload 테스트
-    path('test',image_upload_test_view.TestImageList.as_view()),
+
 ]
