@@ -11,6 +11,10 @@ class StudySerializer(serializers.ModelSerializer):
         model = Study
         fields = ['study_id', 'category', 'title', 'limit', 'description', ]
 
+class StudyAddSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Study
+        fields = ['study_id', 'category', 'title', 'limit', 'description','study_image', ]
 
 # class ActivityPictureStudySerializer(serializers.ModelSerializer):
 #     activity_picture_id = ActivityPictureSerializer(source='activity_picture.activity_picture_id')

@@ -3,7 +3,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
-from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, Activity_pictureOfStudySerializer
+from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, Activity_pictureOfStudySerializer,StudyAddSerializer
 from ..schedule.serializers import ScheduleSerializer, ScheduleDeleteSerializer
 from ..schedule.models import Schedule
 from ..activity_picture.serializers import ActivityPictureSerializer, ActivityPictureDeleteSerializer
@@ -15,6 +15,24 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+from rest_framework.exceptions import ParseError
+
+from config.settings.secret import SECRET_KEY, ALGORITHM
+import jwt
+
+
+def get_object(self, pk, model):
+    return get_object_or_404(model, pk=pk)
+
+
+def jwt_get_payload(self, request):
+    try:
+        user_jwt = request.META['HTTP_X_JWT_TOKEN']
+        user_payload = jwt.decode(user_jwt, SECRET_KEY, algorithm=ALGORITHM)
+        return user_payload
+
+    except (KeyError, jwt.DecodeError):
+        raise ParseError(detail="NO_JWT_TOKEN")
 
 class StudyList(APIView):
     param_hello_hint = openapi.Parameter(
@@ -52,8 +70,8 @@ class StudyList(APIView):
         return serializer
 
     @swagger_auto_schema(
-        request_body=StudySerializer,
-        responses={201: StudySerializer()},
+        request_body=StudyAddSerializer,
+        responses={201: StudyAddSerializer()},
         tags=['studies'],
         operation_description=
         """
@@ -61,6 +79,7 @@ class StudyList(APIView):
         
         ---
             요청사양
+                - study_image : 스터디 이미지
                 - category : 카테고리 이름
                 - title : 스터디 이름
                 - limit : 인원 제한
@@ -68,7 +87,7 @@ class StudyList(APIView):
         """,
     )
     def post(self, request):
-        serializer = StudySerializer(data=request.data)
+        serializer = StudyAddSerializer(data=request.data)
         if serializer.is_valid():
             # study = serializer.save(commit=False)
             # study.category = request.category
@@ -481,3 +500,4 @@ class StudyScheduleDetail(APIView):
     # pk에 해당하는  POST 객체 반환
     def get_object(self, study, schedule_id):
         return get_object_or_404(Schedule, pk=schedule_id, study=study)
+
