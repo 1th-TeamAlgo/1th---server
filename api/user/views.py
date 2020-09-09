@@ -34,34 +34,10 @@ class UserList(APIView):
         serializer = UserDetailSerializer(user)
         return Response(serializer.data)
 
-    @swagger_auto_schema(
-        request_body=UserSerializer,
-        responses={201: UserSerializer()},
-        tags=['users'],
-        operation_description=
-        """
-        특정 id를 가진 회원 수정 API
-        
-        ---
-        
-        Header : x-jwt-token
-
-        """,
-    )
-    def put(self, request):
-        user_payload = self.jwt_get_payload(request)
-        pk = user_payload['user_id']
-        user = self.get_object(pk)
-
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
-        request_body=UserSerializer,
-        responses={201: UserSerializer()},
+        request_body=UserDetailSerializer,
+        responses={201: UserDetailSerializer()},
         tags=['users'],
         operation_description=
         """
@@ -74,9 +50,9 @@ class UserList(APIView):
         
         s3_profile_img 는 사용자가 직업 올린 프로필 사진의 링크 이다.
         
-        구분을 위해서 img_flag를 추가 하였고 True면 kakao_profile을 사용중
+        구분을 위해서 img_flag를 추가 하였고 False면 kakao_profile을 사용중
         
-        img_flag 가 False면 사용자가 직접 올린 사진을 사용하겠다는 뜻 이다.
+        img_flag 가 True면 사용자가 직접 올린 사진을 사용하겠다는 뜻 이다.
 
         ---
 
@@ -91,7 +67,7 @@ class UserList(APIView):
         pk = user_payload['user_id']
         user = self.get_object(pk)
 
-        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer = UserDetailSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
