@@ -11,9 +11,6 @@ SECRET_KEY = secret.SECRET_KEY
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 ALLOWED_HOSTS = ['*']
 
-MIDDLEWARE += [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-]
 
 DATABASES = {
     'default': {

@@ -7,7 +7,7 @@ DatabaseWrapper.data_types['DateTimeField'] = 'datetime'
 
 SECRET_KEY = secret.SECRET_KEY
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # WSGI_APPLICATION = "config.wsgi.application"
 
