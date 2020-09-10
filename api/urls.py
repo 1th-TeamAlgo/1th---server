@@ -6,7 +6,7 @@ from .schedule import views as schedule_views  # 일정
 from api.accounts import views as accounts_views  # 카카오로그인
 from .accounts import views as kakao_account
 from .signup import views as signup_vies
-from .img_upload_test import views as image_upload_test_view
+from .user_image_upload import views as UserImage
 
 app_name = 'accounts'
 
@@ -18,7 +18,7 @@ urlpatterns = [
     ## users ##
     path('users', user_views.UserList.as_view()),
     ## profile 이미지 변경할때 사용하는 api
-    path('users/image',image_upload_test_view.TestImageList.as_view()),
+    path('users/image',UserImage.UserImage.as_view()),
 
     #path('users/<int:pk>', user_views.UserDetail.as_view()),
 

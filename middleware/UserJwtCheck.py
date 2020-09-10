@@ -1,14 +1,11 @@
 from rest_framework.exceptions import ParseError
 from config.settings.secret import SECRET_KEY, ALGORITHM
-from rest_framework.response import Response
-from rest_framework import status
-from django.utils.functional import cached_property
 import jwt
-
 
 class UserJwtCheckMiddleware:
     print("UserJWtCheckMiddleware 들어옴")
     METHOD = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
+
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -35,3 +32,5 @@ class UserJwtCheckMiddleware:
     def process_request(self, request, error_type):
         if error_type == "NO_JWT_TOKEN":
             raise ParseError(detail="NO_JWT_TOKEN")
+
+

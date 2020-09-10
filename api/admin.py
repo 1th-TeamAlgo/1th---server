@@ -5,7 +5,7 @@ from .user.models import User
 from .study_member.models import StudyMember
 from .activity_picture.models import ActivityPicture
 from .schedule.models import Schedule
-from .img_upload_test.models import TestImage
+from .user_image_upload.models import TestImage
 
 admin.site.register(Category)
 admin.site.register(User)

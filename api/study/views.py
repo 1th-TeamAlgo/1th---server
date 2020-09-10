@@ -3,36 +3,23 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import Study
-from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, Activity_pictureOfStudySerializer,StudyAddSerializer
+from .serializers import StudySerializer, StudyDetailSerializer, MemberOfStudySerializer, ScheduleOfStudySerializer, \
+    Activity_pictureOfStudySerializer, StudyAddSerializer
 from ..schedule.serializers import ScheduleSerializer, ScheduleDeleteSerializer
 from ..schedule.models import Schedule
 from ..activity_picture.serializers import ActivityPictureSerializer, ActivityPictureDeleteSerializer
 from ..activity_picture.models import ActivityPicture
-from ..study_member.serializers import StudyMemberSerializer, StudyMemberDeleteSerializer
+from ..study_member.serializers import StudyMemberSerializer, StudyMemberDeleteSerializer, StudyAddStudyMemberSerializer
 from ..study_member.models import StudyMember
+
+from ..user.models import User
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from rest_framework.exceptions import ParseError
+from lib.user_data import jwt_get_payload
 
-from config.settings.secret import SECRET_KEY, ALGORITHM
-import jwt
-
-
-def get_object(self, pk, model):
-    return get_object_or_404(model, pk=pk)
-
-
-def jwt_get_payload(self, request):
-    try:
-        user_jwt = request.META['HTTP_X_JWT_TOKEN']
-        user_payload = jwt.decode(user_jwt, SECRET_KEY, algorithm=ALGORITHM)
-        return user_payload
-
-    except (KeyError, jwt.DecodeError):
-        raise ParseError(detail="NO_JWT_TOKEN")
 
 class StudyList(APIView):
     param_hello_hint = openapi.Parameter(
@@ -48,8 +35,7 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-        스터디 그룹 조회 API
-
+            스터디 그룹 조회 API
         """,
     )
     def get(self, request):
@@ -87,9 +73,26 @@ class StudyList(APIView):
         """,
     )
     def post(self, request):
+        user_payload = jwt_get_payload(request)
+        print(user_payload)
+        print(" ### request.data ### ")
+        print(request.data)
         serializer = StudyAddSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+
+            study_member_data = {
+                'study': serializer.data['study_id'],
+                'user': user_payload['user_id'],
+                'is_manager': True,
+            }
+
+            study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
+
+            if study_member_serializer.is_valid():
+                study_member_serializer.save()
+                print(study_member_serializer.data)
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -288,19 +291,22 @@ class Study_StudyMember(APIView):
         tags=['StudyMember'],
         operation_description=
         """
+        
         스터디 회원 생성 API
-
         ---
-            요청사양
-                -study : 스터디번호
-                -user : 유저번호
-                -is_manager : 운영진인지 아닌지 구분
-
-
+            Header : x-jwt-token
+        ---
+        
         """,
     )
     def post(self, request, *args, **kwargs):
-        serializer = StudyMemberSerializer(data=request.data)
+        user_payload = jwt_get_payload(request)
+
+        study_member_data = {
+            'user': user_payload['user_id'],
+            'study': self.kwargs['studies_id']
+        }
+        serializer = StudyAddStudyMemberSerializer(data=study_member_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -496,4 +502,3 @@ class StudyScheduleDetail(APIView):
     # pk에 해당하는  POST 객체 반환
     def get_object(self, study, schedule_id):
         return get_object_or_404(Schedule, pk=schedule_id, study=study)
-

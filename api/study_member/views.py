@@ -33,9 +33,7 @@ class StudyMemberList(APIView):
         
         ---
             요청사양
-                -is_manager : 운영진인지 아닌지 구분
-                
-                
+                -is_manager : 운영진인지 아닌지 구분  
         """,
     )
     def post(self, request):
