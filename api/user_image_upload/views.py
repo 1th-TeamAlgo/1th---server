@@ -33,7 +33,7 @@ class UserImage(APIView):
         user_payload = jwt_get_payload(request)
         pk = user_payload['user_id']
         user = self.get_object(pk)
-        request.data.update({'img_flag' : True})
+        request.data.update({'img_flag' : False})
         serializer = UserImageUploadSerializer(user,data=request.data, partial=True)
 
         if serializer.is_valid():
