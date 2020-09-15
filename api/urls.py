@@ -49,8 +49,8 @@ urlpatterns = [
     path('studies/<int:studies_id>/members/<int:study_members_id>', study_views.Study_StudyMemberDetail.as_view()),
 
     ## schedules ##
-    path('schedules', schedule_views.ScheduleList.as_view()),
-    path('schedules/<int:pk>', schedule_views.ScheduleDetail.as_view()),
+    #path('schedules', schedule_views.ScheduleList.as_view()),
+    #path('schedules/<int:pk>', schedule_views.ScheduleDetail.as_view()),
 
     ## activity_pictures(Update 필요) ##
     # path('activity-pictures', activity_picture_views.APList.as_view()),
