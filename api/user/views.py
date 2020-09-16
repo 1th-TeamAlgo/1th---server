@@ -2,8 +2,10 @@ from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import User
-from .serializers import UserDetailSerializer
+from .serializers import UserDetailSerializer, UserScheduleSerializer
 
+from ..schedule.models import Schedule
+from ..schedule.serializers import ScheduleSerializer2
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -33,7 +35,6 @@ class UserList(APIView):
         user = self.get_object(user_payload['user_id'])
         serializer = UserDetailSerializer(user)
         return Response(serializer.data)
-
 
     @swagger_auto_schema(
         request_body=UserDetailSerializer,
@@ -74,3 +75,30 @@ class UserList(APIView):
     def get_object(self, pk):
         return get_object_or_404(User, pk=pk)
 
+
+class UserScheduleList(APIView):
+    def get(self, request):
+        user_payload = jwt_get_payload(request)
+        user = self.get_object(user_payload['user_id'])
+
+        year, month, day = request.GET.get('choice_date').split('-')
+        choice_schedules = list()
+
+
+        for study in user.study_set.all():
+            schedules = study.schedule_set.all()
+            filter_schedules = schedules.filter(datetime__year=year,
+                                                 datetime__month=month,
+                                                 datetime__day=day,
+                                                 ).values()
+
+            for i, schedule in enumerate(filter_schedules):
+                schedule['study_title'] = study.title
+                choice_schedules.append(schedule)
+
+
+        print(choice_schedules)
+        return Response(data=choice_schedules, status=status.HTTP_200_OK)
+
+    def get_object(self, pk):
+        return get_object_or_404(User, pk=pk)

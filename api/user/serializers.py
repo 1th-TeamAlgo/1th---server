@@ -1,7 +1,13 @@
 from rest_framework import serializers
 from .models import User
+from ..schedule.models import Schedule
+from ..schedule.serializers import ScheduleSerializer
+
+from ..study.models import Study
 from ..study.serializers import StudySerializer
+
 from ..study_member.models import StudyMember
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -37,3 +43,19 @@ class UserImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['s3_profile_img','img_flag']
+
+class UserScheduleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Schedule
+
+        fields = '__all__'
+
+    #study_schedule = ScheduleSerializer(source='schedule_set', many=True)
+
+    #class Meta:
+    #    model = Study
+    #    fields = ['study_schedule', ]
+
+
+

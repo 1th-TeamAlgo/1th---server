@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .user import views as user_views  # 유저
+from .user import views as user_views # 유저
 from .study import views as study_views  # 스터디
 from .schedule import views as schedule_views  # 일정
 
@@ -19,7 +19,7 @@ urlpatterns = [
     path('users', user_views.UserList.as_view()),
     ## profile 이미지 변경할때 사용하는 api
     path('users/image',UserImage.UserImage.as_view()),
-
+    path('users/schedules', user_views.UserScheduleList.as_view()),
     #path('users/<int:pk>', user_views.UserDetail.as_view()),
 
     # categorys(deprecate) ##

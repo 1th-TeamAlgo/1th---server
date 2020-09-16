@@ -42,6 +42,7 @@ class StudyList(APIView):
         get_data = request.query_params
         serializer = self.get_serializer(get_data=get_data)
 
+        print(f"serializer -> {serializer}")
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def get_serializer(self, get_data):
@@ -78,6 +79,8 @@ class StudyList(APIView):
         print(" ### request.data ### ")
         print(request.data)
         serializer = StudyAddSerializer(data=request.data)
+        print(request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
 
@@ -330,7 +333,7 @@ class Study_StudyMemberDetail(APIView):
         """,
     )
     def get(self, request, *args, **kwargs):
-        print("스터디맴버 디테일 시작")
+        print("스터디d맴버 디테일 시작")
         study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
                                        study=self.kwargs['studies_id'])
         print(study_member)
