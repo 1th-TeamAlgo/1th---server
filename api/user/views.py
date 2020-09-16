@@ -77,6 +77,21 @@ class UserList(APIView):
 
 
 class UserScheduleList(APIView):
+    @swagger_auto_schema(
+        responses={201: ScheduleSerializer2()},
+        tags=['users'],
+        operation_description=
+        """
+            특정 날짜에 있는 나의 스터디 스케쥴 API
+
+        ---
+            Header : x-jwt-token
+        ---
+            query_params : choice_data = YYYY-MM-DD   
+
+
+        """,
+    )
     def get(self, request):
         user_payload = jwt_get_payload(request)
         user = self.get_object(user_payload['user_id'])
