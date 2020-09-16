@@ -21,6 +21,16 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default' : {
+        'BACKEND' : 'django-redis.cache.RedisCache',
+        'LOCATION' : 'redis://ec2-3-34-134-147.ap-northeast-2.compute.amazonaws.com:6379/0',
+        'OPTIONS':{
+            'CLIENT_CLASS':'django_redis.client.DefaultClient',
+        }
+    }
+}
+
 
 WSGI_APPLICATION = 'config.wsgi.production.application'
 
