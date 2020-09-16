@@ -7,6 +7,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+import json
+
+from lib.user_data import jwt_get_payload
 
 class StudyMemberList(APIView):
     @swagger_auto_schema(
@@ -58,6 +61,41 @@ class StudyMemeberDetail(APIView):
         study_member = self.get_object(pk)
         serializer = StudyMemberSerializer(study_member)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # pk에 해당하는  POST 객체 반환
+    def get_object(self, pk):
+        return get_object_or_404(StudyMember, pk=pk)
+
+
+from django.core.cache import cache
+
+class StudyJoin(APIView):
+    ## 스터디 가입 리스트 확인 (api/v1/studies/1/joinmember)
+
+    def get(self, request, *args, **kwargs):
+        user_payload = jwt_get_payload(request)
+        user = self.get_object(user_payload['user_id'])
+        study_id = self.kwargs['studies_id']
+
+        print("들어왔다")
+        dataDict = {
+            "key1": "테스트값1",
+            "key2": "테스트값2",
+            "key3": "테스트값3"
+        }
+        jsonDataDict = json.dumps(dataDict, ensure_ascii=False).encode('utf-8')
+
+        cache.set("dict",jsonDataDict)
+        cache.set
+        # 데이터 get
+        resultData = cache.get("dict")
+        resultData = resultData.decode('utf-8')
+
+        # json loads
+        result = dict(json.loads(resultData))
+
+        print(result)
+        return Response(data = None)
 
     # pk에 해당하는  POST 객체 반환
     def get_object(self, pk):

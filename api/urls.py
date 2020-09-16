@@ -7,6 +7,7 @@ from api.accounts import views as accounts_views  # 카카오로그인
 from .accounts import views as kakao_account
 from .signup import views as signup_vies
 from .user_image_upload import views as UserImage
+from .study_member import views as study_member
 
 app_name = 'accounts'
 
@@ -47,6 +48,8 @@ urlpatterns = [
     path('studies/<int:studies_id>/pictures/<int:activity_pictures_id>', study_views.StudyActivity_picturesDetail.as_view()),
     path('studies/<int:studies_id>/members', study_views.Study_StudyMember.as_view()),
     path('studies/<int:studies_id>/members/<int:study_members_id>', study_views.Study_StudyMemberDetail.as_view()),
+
+    path('studies/<int:studies_id>/members/apply',study_member.StudyJoin.as_view()),
 
     ## schedules ##
     #path('schedules', schedule_views.ScheduleList.as_view()),

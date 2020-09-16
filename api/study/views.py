@@ -12,15 +12,12 @@ from ..activity_picture.models import ActivityPicture
 from ..study_member.serializers import StudyMemberSerializer, StudyMemberDeleteSerializer, StudyAddStudyMemberSerializer
 from ..study_member.models import StudyMember
 
-from ..user.models import User
-
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
 from lib.user_data import jwt_get_payload
 
-import redis
 
 class StudyList(APIView):
     param_hello_hint = openapi.Parameter(
@@ -507,12 +504,4 @@ class StudyScheduleDetail(APIView):
     def get_object(self, study, schedule_id):
         return get_object_or_404(Schedule, pk=schedule_id, study=study)
 
-from django.core.cache import cache
 
-class StudyJoin(APIView):
-    ## 스터디 가입 리스트 확인 (api/v1/studies/1/joinmember)
-
-    def get(self, request, *args, **kwargs):
-        value = cache.get('hi')
-        print(value)
-        return Response(data = None)

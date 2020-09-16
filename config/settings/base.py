@@ -2,6 +2,7 @@
 import os
 import datetime
 from django.conf import settings
+import redis
 
 #카카오로그인
 from ..settings.secret import SECRET_KEY

@@ -39,12 +39,15 @@ DATABASES = {
     }
 }
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 CACHES = {
-    'default' : {
-        'BACKEND' : 'django-redis.cache.RedisCache',
-        'LOCATION' : 'redis://ec2-3-34-134-147.ap-northeast-2.compute.amazonaws.com:6379/0',
-        'OPTIONS':{
-            'CLIENT_CLASS':'django_redis.client.DefaultClient',
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://ec2-3-34-134-147.ap-northeast-2.compute.amazonaws.com:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
 }

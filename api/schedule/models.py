@@ -8,7 +8,7 @@ class Schedule(models.Model):
     study = models.ForeignKey(Study, on_delete=models.CASCADE)
     datetime = models.DateTimeField()
     place = models.CharField(max_length=20)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=200)
 
     def __str__(self):
