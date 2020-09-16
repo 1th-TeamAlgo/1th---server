@@ -87,7 +87,7 @@ class UserScheduleList(APIView):
         ---
             Header : x-jwt-token
         ---
-            query_params : choice_data = YYYY-MM-DD   
+            query_params : choice_date = YYYY-MM-DD   
 
 
         """,
