@@ -73,12 +73,7 @@ class StudyList(APIView):
     )
     def post(self, request):
         user_payload = jwt_get_payload(request)
-        print(user_payload)
-        print(" ### request.data ### ")
-        print(request.data)
         serializer = StudyAddSerializer(data=request.data)
-        print(request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
 
@@ -92,8 +87,6 @@ class StudyList(APIView):
 
             if study_member_serializer.is_valid():
                 study_member_serializer.save()
-                print(study_member_serializer.data)
-            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

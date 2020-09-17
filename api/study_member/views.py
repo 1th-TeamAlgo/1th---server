@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 
+from ..user.models import User
+from ..study.models import Study
 from .models import StudyMember
 from .serializers import StudyMemberSerializer
 from rest_framework.response import Response
@@ -10,6 +12,7 @@ from rest_framework import status
 import json
 
 from lib.user_data import jwt_get_payload
+
 
 class StudyMemberList(APIView):
     @swagger_auto_schema(
@@ -69,34 +72,62 @@ class StudyMemeberDetail(APIView):
 
 from django.core.cache import cache
 
-class StudyJoin(APIView):
-    ## 스터디 가입 리스트 확인 (api/v1/studies/1/joinmember)
 
+# /api/v1/studies/<int:studies_id>/members/apply
+class StudyJoin(APIView):
+
+    ## 스터디 가입 리스트 확인 api
     def get(self, request, *args, **kwargs):
         user_payload = jwt_get_payload(request)
-        user = self.get_object(user_payload['user_id'])
+        user = get_object_or_404(User, pk=user_payload['user_id'])
         study_id = self.kwargs['studies_id']
 
-        print("들어왔다")
-        dataDict = {
-            "key1": "테스트값1",
-            "key2": "테스트값2",
-            "key3": "테스트값3"
-        }
-        jsonDataDict = json.dumps(dataDict, ensure_ascii=False).encode('utf-8')
+        data = cache.get(study_id)
 
-        cache.set("dict",jsonDataDict)
-        cache.set
-        # 데이터 get
-        resultData = cache.get("dict")
-        resultData = resultData.decode('utf-8')
+        if data is None:
+            study_apply_list = []
 
-        # json loads
-        result = dict(json.loads(resultData))
+        else:
+            study_apply_dict = json.loads(data)
+            study_apply_dict = study_apply_dict[str(study_id)]
+            study_apply_list = [value for value in study_apply_dict.values()]
 
-        print(result)
-        return Response(data = None)
+        return Response(data=study_apply_list)
+
+    # 스터디에 가입 하기 신청 api
+    def post(self, request, *args, **kwargs):
+        user_payload = jwt_get_payload(request)
+        user = get_object_or_404(User, pk=user_payload['user_id'])
+        study_id = self.kwargs['studies_id']
+        study = get_object_or_404(Study, pk=study_id)
+
+        data = cache.get(study_id)
+
+        if data is None:
+            cache.set(study_id, self.get_user_data(user))
+
+        #else:
+        #    study_apply_dict = data[str(study_id)]
+        #    print(study_apply_dict)
+
+        return self.get_user_data(user)
 
     # pk에 해당하는  POST 객체 반환
     def get_object(self, pk):
-        return get_object_or_404(StudyMember, pk=pk)
+        return get_object_or_404(User, pk=pk)
+
+    def get_user_data(self, user):
+        user_data = dict(
+            user_id=user.user_id,
+            user_name=user.name,
+            user_age=user.age,
+            user_cellphone=user.cellphone,
+            user_description=user.description,
+            user_category=user.categories,
+        )
+
+        user_data = dict(
+            user_id = user_data
+        )
+        return user_data
+
