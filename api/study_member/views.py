@@ -4,7 +4,10 @@ from drf_yasg.utils import swagger_auto_schema
 from ..user.models import User
 from ..study.models import Study
 from .models import StudyMember
-from .serializers import StudyMemberSerializer
+from .serializers import StudyMemberSerializer, StudyAddStudyMemberSerializer
+
+from ..study.serializers import MemberOfStudySerializer
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -74,12 +77,10 @@ from django.core.cache import cache
 
 
 # /api/v1/studies/<int:studies_id>/members/apply
-class StudyJoin(APIView):
+class StudyMemberJoin(APIView):
 
     ## 스터디 가입 리스트 확인 api
     def get(self, request, *args, **kwargs):
-        user_payload = jwt_get_payload(request)
-        user = get_object_or_404(User, pk=user_payload['user_id'])
         study_id = self.kwargs['studies_id']
 
         data = cache.get(study_id)
@@ -88,9 +89,7 @@ class StudyJoin(APIView):
             study_apply_list = []
 
         else:
-            study_apply_dict = json.loads(data)
-            study_apply_dict = study_apply_dict[str(study_id)]
-            study_apply_list = [value for value in study_apply_dict.values()]
+            study_apply_list = cache.get(study_id)
 
         return Response(data=study_apply_list)
 
@@ -99,24 +98,24 @@ class StudyJoin(APIView):
         user_payload = jwt_get_payload(request)
         user = get_object_or_404(User, pk=user_payload['user_id'])
         study_id = self.kwargs['studies_id']
-        study = get_object_or_404(Study, pk=study_id)
 
-        data = cache.get(study_id)
+        apply_data = cache.get(study_id)
 
-        if data is None:
-            cache.set(study_id, self.get_user_data(user))
+        if apply_data is None:
+            print("if")
+            cache.set(study_id, {user.user_id: self.get_user_data(user)})
 
-        #else:
-        #    study_apply_dict = data[str(study_id)]
-        #    print(study_apply_dict)
+        else:
+            print("else")
+            study_apply_dict = apply_data
+            study_apply_dict[user.user_id] = self.get_user_data(user)
+            cache.set(study_id, study_apply_dict)
 
-        return self.get_user_data(user)
+        apply_data = cache.get(study_id)
 
-    # pk에 해당하는  POST 객체 반환
-    def get_object(self, pk):
-        return get_object_or_404(User, pk=pk)
+        return Response(data=apply_data)
 
-    def get_user_data(self, user):
+    def get_user_data(self, user) -> dict:
         user_data = dict(
             user_id=user.user_id,
             user_name=user.name,
@@ -126,8 +125,41 @@ class StudyJoin(APIView):
             user_category=user.categories,
         )
 
-        user_data = dict(
-            user_id = user_data
-        )
         return user_data
 
+
+class StudyMemberConfirm(APIView):
+
+    ## study 가입 신청 멤버 승인
+    def post(self, request, *args, **kwargs):
+        study_id = self.kwargs['studies_id']
+        user_id = request.POST.get('user_id')
+
+        user = get_object_or_404(User, pk=user_id)
+
+        if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
+           return Response(data=["이미 들어있다"])
+
+        study_member_data = {
+            'study': study_id,
+            'user': user_id,
+            'is_manager': False,
+        }
+
+        study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
+
+        if study_member_serializer.is_valid():
+            study_member_serializer.save()
+
+        study_members = get_object_or_404(Study, pk=study_id)
+        study_members_serializer = MemberOfStudySerializer(study_members)
+        return Response(study_members_serializer.data)
+
+
+    ## study 가입 신청 멤버 반려
+    def delete(self, request, *args, **kwargs):
+        pass
+
+    ## 가입 승인 또는 반려 된 인원 redis에서 제거
+    def apply_member_delete_redis(self, user_id):
+        pass

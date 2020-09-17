@@ -29,9 +29,14 @@ class ResponseFormattingMiddleware:
                 'message': {}
 
             }
-
+            #
+            # print(f"response_foramt -> {response_format}")
+            # print(f"response_code-> {response.status_code}")
+            # print(f"response_text-> {response.status_text}")
+            # print(f"response_code-> {response.data}")
             if hasattr(response, 'data') and getattr(response, 'data') is not None:
                 data = response.data
+
                 try:
                     response_format['message'] = data.pop('message')
                 except (KeyError, TypeError):

@@ -51,11 +51,5 @@ class UserScheduleSerializer(serializers.ModelSerializer):
 
         fields = '__all__'
 
-    #study_schedule = ScheduleSerializer(source='schedule_set', many=True)
-
-    #class Meta:
-    #    model = Study
-    #    fields = ['study_schedule', ]
-
 
 
