@@ -11,7 +11,7 @@ from rest_framework.exceptions import ParseError
 
 import json
 from ..user.models import User
-from ..user.serializers import UserSerializer
+from ..user.serializers.user_sz import UserSerializer
 
 
 class KakaoAccount(APIView):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import StudyMember
+from ..models import StudyMember
 
 
 class StudyMemberSerializer(serializers.ModelSerializer):
@@ -18,18 +18,4 @@ class StudyMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudyMember
         fields = ['study_member_id', 'study', 'is_manager', 'user_id', 'name', 'email', 'age', 'cellphone', 'gender',
-                  'description','categories','kakao_profile_img', 's3_profile_img', 'img_flag', ]
-
-
-class StudyMemberDeleteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StudyMember
-        fields = ['study', 'user', ]
-
-
-class StudyAddStudyMemberSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StudyMember
-        fields = ['study', 'user', 'is_manager' ]
-
-
+                  'description', 'categories', 'kakao_profile_img', 's3_profile_img', 'img_flag', ]

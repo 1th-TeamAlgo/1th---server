@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 
-from ..user.models import User
-from ..user.serializers import UserImageUploadSerializer
+from ..models import User
+from ..serializers.user_image_upload_sz import UserImageUploadSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,8 +11,7 @@ from rest_framework import status
 from lib.user_data import jwt_get_payload
 
 
-
-class UserImage(APIView):
+class UserImageUpload(APIView):
     @swagger_auto_schema(
         request_body=UserImageUploadSerializer,
         responses={201: UserImageUploadSerializer()},
@@ -29,12 +28,12 @@ class UserImage(APIView):
 
         """,
     )
-    def post(self,request):
+    def post(self, request):
         user_payload = jwt_get_payload(request)
         pk = user_payload['user_id']
         user = self.get_object(pk)
-        request.data.update({'img_flag' : False})
-        serializer = UserImageUploadSerializer(user,data=request.data, partial=True)
+        request.data.update({'img_flag': False})
+        serializer = UserImageUploadSerializer(user, data=request.data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
