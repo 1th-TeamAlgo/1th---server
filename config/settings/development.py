@@ -1,9 +1,6 @@
 # 개발 설정
 from . import secret
 from .base import *
-from django.db.backends.mysql.base import DatabaseWrapper
-
-DatabaseWrapper.data_types['DateTimeField'] = 'datetime'
 
 SECRET_KEY = secret.SECRET_KEY
 DEBUG = True
