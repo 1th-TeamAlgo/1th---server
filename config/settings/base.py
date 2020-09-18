@@ -2,6 +2,7 @@
 import os
 import datetime
 from django.conf import settings
+import redis
 
 #카카오로그인
 from ..settings.secret import SECRET_KEY
@@ -107,6 +108,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = '/home/centos/wisestudy-server/static'
 STATIC_URL = '/static/'
-
+STARTFILES_DIRS = (
+    os.path.join(BASE_DIR,'static')	
+)
 APPEND_SLASH = False

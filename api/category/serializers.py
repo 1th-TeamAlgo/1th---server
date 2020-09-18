@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Category
-from ..study.serializers import StudySerializer
+from ..study.serializers.study_sz import StudySerializer
 
 
 class CategorySerializer(serializers.ModelSerializer):

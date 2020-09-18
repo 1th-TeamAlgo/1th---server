@@ -1,12 +1,8 @@
-from drf_yasg.utils import swagger_auto_schema
-
 from .serializers import UserSignUpSerializer
-
-from ..user.models import User
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import json
+
 
 class UserSignUp(APIView):
     # @swagger_auto_schema(

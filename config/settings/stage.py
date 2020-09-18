@@ -11,17 +11,14 @@ SECRET_KEY = secret.SECRET_KEY
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 ALLOWED_HOSTS = ['*']
 
-MIDDLEWARE += [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-]
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'heroku_91058f0babf3969',
-        'USER': 'b07cec7fd5b708',
-        'PASSWORD': '527ea9e5',
-        'HOST': 'us-cdbr-east-02.cleardb.com',
+        'NAME': 'wisestudy',
+        'USER': 'root',
+        'PASSWORD': 'schwisestudy',
+        'HOST': 'wisestudy.cinqw7ouyrxc.ap-northeast-2.rds.amazonaws.com',
         'PORT': 3306,
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
