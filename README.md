@@ -8,3 +8,13 @@ WISESTUDY-SERVER
   ㄴ /api    : API 애플리케이션 공간
   ㄴ /config : Django 환경 설정 관련 공간
 ```
+
+## WAS
+
+- Django
+- Nginx
+- gunicorn
+
+## Cache
+
+- Redis
