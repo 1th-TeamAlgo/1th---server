@@ -15,6 +15,9 @@ from .study.views.study_member_detail import Study_StudyMemberDetail
 
 from .study_member.views.study_member_apply import StudyMemberApply
 from .study_member.views.study_member_confirm import StudyMemberConfirm
+
+from .study.views.study_activity_picture import StudyActivity_pictures
+from .study.views.study_activity_picture_detail import StudyActivityPicturesDetail
 app_name = 'accounts'
 
 urlpatterns = [
@@ -33,13 +36,12 @@ urlpatterns = [
     path('studies/<int:studies_id>', StudyDetail.as_view()),
     path('studies/<int:studies_id>/schedules', StudySchedule.as_view()),
     path('studies/<int:studies_id>/schedules/<int:schedules_id>', StudyScheduleDetail.as_view()),
-    ##path('studies/<int:studies_id>/pictures', study_views.StudyActivity_pictures.as_view()),
-    ##path('studies/<int:studies_id>/pictures/<int:activity_pictures_id>', study_views.StudyActivity_picturesDetail.as_view()),
     path('studies/<int:studies_id>/members', Study_StudyMember.as_view()),
     path('studies/<int:studies_id>/members/<int:study_members_id>', Study_StudyMemberDetail.as_view()),
     path('studies/<int:studies_id>/members/apply', StudyMemberApply.as_view()),
     path('studies/<int:studies_id>/members/comfirm', StudyMemberConfirm.as_view()),
-
+    path('studies/<int:studies_id>/pictures', StudyActivity_pictures.as_view()),
+    path('studies/<int:studies_id>/pictures/<int:activity_pictures_id>',StudyActivityPicturesDetail.as_view()),
 
     ## activity_pictures(Update 필요) ##
     # path('activity-pictures', activity_picture_views.APList.as_view()),
