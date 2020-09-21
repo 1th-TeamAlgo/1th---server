@@ -41,28 +41,22 @@ class KakaoAccount(APIView):
         """,
     )
     def get(self, request, format=None):
-        print("############ GET ############")
         access_token = request.META['HTTP_KAKAO_ACCESS_TOKEN']
         kakao_account = self.get_kakao_account(access_token=access_token)
 
         return Response(data=kakao_account)
 
     def get_kakao_account(self, access_token):
-        print("############ get_kakao_account ############")
         user_profile_info_uri = "https://kapi.kakao.com/v2/user/me"
-        print(user_profile_info_uri)
         try:
             user_profile_info_uri_data = requests.post(user_profile_info_uri,
                                                        headers={'Authorization': f"Bearer ${access_token}"})
             user_json_data = user_profile_info_uri_data.json()
-            print(user_json_data)
-
             new_user_payload = self.make_payload(user_json_data)
 
             return new_user_payload
 
         except KeyError:
-            print("Asdfsdf")
             raise ParseError(detail="NO_ACCESS_TOKEN")
 
     def make_payload(self, user_json_data):
@@ -77,27 +71,19 @@ class KakaoAccount(APIView):
         nickname = kakao_account['profile']['nickname']
         email = kakao_account['email']
         kakao_profile_img = kakao_account['profile']['profile_image_url']
-        print(kakao_profile_img)
         is_user = User.objects.filter(email=email)
         is_user_len = len(is_user)
 
-        print("IF 들어가기전")
         if len(is_user) == 0:
             ### 새로운 user model 생성 부분 ###
-            print("새로운 user model")
-
             new_user = User(name=nickname, email=email, kakao_profile_img=kakao_profile_img)
             new_user.save()
             user_serailizer = UserSerializer(new_user)
 
         else:
             ### 기존 user model ###
-            print("기존 user model")
-
             is_user = is_user.values()
-            print(is_user)
             user_serailizer = UserSerializer(is_user[0])
-            print(user_serailizer.data)
 
         data = {
             'user_id': user_serailizer.data['user_id'],

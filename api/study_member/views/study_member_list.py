@@ -33,7 +33,7 @@ class StudyMemberList(APIView):
         스터디 회원 생성 API
 
         ---
-            요청사양
+            request_body
                 -is_manager : 운영진인지 아닌지 구분  
         """,
     )

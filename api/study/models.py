@@ -7,7 +7,6 @@ from ..user.models import User
 
 class Study(models.Model):
     study_id = models.AutoField(primary_key=True)
-    # category = models.ForeignKey(Category, related_name='study', on_delete=models.CASCADE)
     study_image = models.FileField(blank=True, null=True)
     category = models.CharField(max_length=200)
     study_members = models.ManyToManyField(User, through='StudyMember')
