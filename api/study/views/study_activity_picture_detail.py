@@ -17,7 +17,7 @@ class StudyActivityPicturesDetail(APIView):
         tags=['activity_pictures'],
         operation_description=
         """
-            특정 id를 가진 활동사진 조회 API
+            특정 id를 가진 활동사진 조회
         
         ---
 
@@ -27,6 +27,18 @@ class StudyActivityPicturesDetail(APIView):
         ap = get_object_or_404(ActivityPicture, pk=self.kwargs['activity_pictures_id'])
         serializer = ActivityPictureSerializer(ap)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        responses={200: ActivityPictureSerializer()},
+        tags=['activity_pictures'],
+        operation_description=
+        """
+            특정 id를 가진 활동사진 삭제
+
+        ---
+
+        """,
+    )
 
     def delete(self, request, *args, **kwargs):
         ap = get_object_or_404(ActivityPicture, pk=self.kwargs['activity_pictures_id'])
