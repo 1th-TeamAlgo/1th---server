@@ -23,10 +23,12 @@ class StudyMemberApply(APIView):
         tags=['studies'],
         operation_description=
         """
-        특정 id를 가진 스터디 회원 조회 API
-
+        스터디에 가입 신청한 인원 리스트 확인    
         ---
-            request_parmas : studies_id
+            Header : x-jwt-token
+        ---
+            request_parmas
+                - studies_id : 리스트 확인할 스터디의 id
         ---
         ```json
         response 
@@ -67,6 +69,19 @@ class StudyMemberApply(APIView):
             study_apply_list = cache.get(str_study_id)
 
         return Response(data=study_apply_list)
+
+    @swagger_auto_schema(
+        tags=['studies'],
+        operation_description=
+        """
+        스터디에 가입 신청 하기 
+        ---
+            Header : x-jwt-token
+        ---
+            request_body
+                - user_id : 스터디 가입 신청할 유저 id
+        """,
+    )
 
     # 스터디에 가입 하기 신청 api
     def post(self, request, *args, **kwargs):

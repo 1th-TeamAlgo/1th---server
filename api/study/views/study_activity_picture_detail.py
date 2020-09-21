@@ -17,10 +17,8 @@ class StudyActivityPicturesDetail(APIView):
         tags=['activity_pictures'],
         operation_description=
         """
-            특정 id를 가진 활동사진 조회
-        
+        특정 id를 가진 활동사진 조회
         ---
-
         """,
     )
     def get(self, request, *args, **kwargs):
@@ -33,8 +31,7 @@ class StudyActivityPicturesDetail(APIView):
         tags=['activity_pictures'],
         operation_description=
         """
-            특정 id를 가진 활동사진 삭제
-
+        특정 id를 가진 활동사진 삭제
         ---
 
         """,

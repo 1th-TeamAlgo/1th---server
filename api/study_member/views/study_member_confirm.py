@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from drf_yasg.utils import swagger_auto_schema
 
 from ...user.models import User
 from ...study.models import Study
@@ -14,7 +15,16 @@ from rest_framework.views import APIView
 from django.core.cache import cache
 
 class StudyMemberConfirm(APIView):
-
+    @swagger_auto_schema(
+        tags=['studies'],
+        operation_description=
+        """
+        스터디 가입 신청 넣은 인원 승인 api
+        ---
+            request_body
+                - user_id : 스터디 가입 신청한 유저 id
+        """,
+    )
     ## study 가입 신청 멤버 승인
     def post(self, request, *args, **kwargs):
         study_id = self.kwargs['studies_id']
@@ -43,6 +53,16 @@ class StudyMemberConfirm(APIView):
         study_members_serializer = MemberOfStudySerializer(study_members)
         return Response(study_members_serializer.data)
 
+    @swagger_auto_schema(
+        tags=['studies'],
+        operation_description=
+        """
+        스터디 가입 신청 인원 거절 
+        ---
+            request_body
+                - user_id : 스터디 가입 신청한 유저 id
+        """,
+    )
     ## study 가입 신청 멤버 반려
     def delete(self, request, *args, **kwargs):
         study_id = self.kwargs['studies_id']

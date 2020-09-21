@@ -16,7 +16,9 @@ class StudyMemeberDetail(APIView):
         operation_description=
         """
         특정 id를 가진 스터디 회원 조회 API
-
+        ---
+            Header : x-jwt-token
+        ---
         """,
     )
     def get(self, request, pk):

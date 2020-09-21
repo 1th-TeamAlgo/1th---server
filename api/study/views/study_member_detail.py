@@ -5,10 +5,13 @@ from ...study_member.serializers.study_member_sz import StudyMemberSerializer
 from ...study_member.serializers.study_member_delete_sz import StudyMemberDeleteSerializer
 from ...study_member.models import StudyMember
 
+from ...user.models import User
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+from lib.user_data import jwt_get_payload
 
 
 ##-- 스터디맴버 디테일--
@@ -19,17 +22,13 @@ class Study_StudyMemberDetail(APIView):
         operation_description=
         """
         특정 id를 가진 회원 조회 API
-
-
+        ---
         """,
     )
     def get(self, request, *args, **kwargs):
-        print("스터디d맴버 디테일 시작")
-        study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
+        study_member = get_object_or_404(StudyMember, study_member_id=self.kwargs['study_members_id'],
                                        study=self.kwargs['studies_id'])
-        print(study_member)
         serializer = StudyMemberSerializer(study_member)
-        print(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
@@ -45,7 +44,7 @@ class Study_StudyMemberDetail(APIView):
         """,
     )
     def put(self, request, *args, **kwargs):
-        study_member = self.get_object(study_member_id=self.kwargs['study_members_id'],
+        study_member = get_object_or_404(StudyMember, study_member_id=self.kwargs['study_members_id'],
                                        study=self.kwargs['studies_id'])
 
         serializer = StudyMemberSerializer(study_member, data=request.data)
@@ -60,18 +59,20 @@ class Study_StudyMemberDetail(APIView):
         tags=['StudyMember'],
         operation_description=
         """
-        특정 id를 가진 회원 삭제 API
+        특정 id를 가진 회원 삭제 API - 관리자가 아니면 삭제 불가능
         ---
-            요청사항
-                - studymember_id : 스터디회원 id
+            Header : x-jwt-token
         """,
     )
     def delete(self, request, *args, **kwargs):
-        study_member = self.get_object(study_member_id=self.kwargs['study_members_id'], study=self.kwargs['studies_id'])
-        serializer = StudyMemberDeleteSerializer(study_member)
-        study_member.delete()
-        return Response(data=serializer.data)
+        user_payload = jwt_get_payload(request)
 
-    # pk에 해당하는  POST 객체 반환
-    def get_object(self, study, study_member_id):
-        return get_object_or_404(StudyMember, pk=study_member_id, study=study)
+        user_is_manager = get_object_or_404(StudyMember, study=self.kwargs['studies_id'], user=user_payload['user_id'])
+        if hasattr(user_is_manager, 'is_manager') is not None and getattr(user_is_manager , 'is_manager') is True:
+            study_member = get_object_or_404(StudyMember, study_member_id=self.kwargs['study_members_id'],
+                                             study=self.kwargs['studies_id'])
+            serializer = StudyMemberDeleteSerializer(study_member)
+            study_member.delete()
+            return Response(data=serializer.data)
+        else:
+            return Response(data=['관리자가 아닙니다'])

@@ -15,8 +15,7 @@ class StudyActivity_pictures(APIView):
         tags=['activity_pictures'],
         operation_description=
         """
-        스터디의 activity_pictures 목록 API
-
+        스터디의 활동사진 목록
         ---
             정렬사항 
                 - datetime의 역순으로 정렬
@@ -36,10 +35,9 @@ class StudyActivity_pictures(APIView):
         tags=['activity_pictures'],
         operation_description=
         """
-        스터디의 활동사진 생성 API
-
+        스터디의 활동사진 생성
         ---
-            요청사양
+            request_body
                 - study : study의 id
                 - activity_picture : 이미지 업로드
         """,

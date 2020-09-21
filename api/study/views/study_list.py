@@ -28,7 +28,10 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-            스터디 그룹 조회 API
+        스터디 그룹 조회 API
+        ---
+            request_params
+                - title : 검색할 스터디의 이름
         """,
     )
     def get(self, request):
@@ -56,9 +59,8 @@ class StudyList(APIView):
         operation_description=
         """
         스터디 그룹 생성 API
-
         ---
-            요청사양
+            request_body
                 - study_image : 스터디 이미지
                 - category : 카테고리 이름
                 - title : 스터디 이름
