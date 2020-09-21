@@ -1,7 +1,5 @@
 from drf_yasg.utils import swagger_auto_schema
 
-from ..models import Study
-from ..serializers.activity_picture_of_study_sz import Activity_pictureOfStudySerializer
 from ...activity_picture.serializers.activity_picture_sz import ActivityPictureSerializer
 
 from ...activity_picture.models import ActivityPicture
@@ -13,7 +11,7 @@ from rest_framework import status
 
 class StudyActivity_pictures(APIView):
     @swagger_auto_schema(
-        responses={200: Activity_pictureOfStudySerializer()},
+        responses={200: ActivityPictureSerializer()},
         tags=['activity_pictures'],
         operation_description=
         """
@@ -33,8 +31,8 @@ class StudyActivity_pictures(APIView):
         return Response(serializer.data)
 
     @swagger_auto_schema(
-        request_body=Activity_pictureOfStudySerializer,
-        responses={201: Activity_pictureOfStudySerializer()},
+        request_body=ActivityPictureSerializer,
+        responses={201: ActivityPictureSerializer()},
         tags=['activity_pictures'],
         operation_description=
         """
