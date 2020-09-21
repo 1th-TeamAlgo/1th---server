@@ -37,19 +37,20 @@ class StudyList(APIView):
     def get(self, request):
         get_data = request.query_params
         serializer = self.get_serializer(get_data=get_data)
-
-        print(f"serializer -> {serializer}")
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data)
 
     def get_serializer(self, get_data):
-        if 'title' in get_data:
+        if hasattr(get_data, 'title') is not None:
+            print("asdf")
             study = Study.objects.filter(title__contains=get_data['title'])
             serializer = StudySerializer(study, many=True)
 
         else:
+            print("zxcv")
             study = Study.objects.all()
             serializer = StudySerializer(study, many=True)
 
+        print(f"왜 두개일까 {serializer}")
         return serializer
 
     @swagger_auto_schema(
