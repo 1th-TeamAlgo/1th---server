@@ -40,17 +40,16 @@ class StudyList(APIView):
         return Response(serializer.data)
 
     def get_serializer(self, get_data):
-        if hasattr(get_data, 'title') is not None:
-            print("asdf")
+        if get_data.get('title') is not None:
+            print("타이틀 있다")
             study = Study.objects.filter(title__contains=get_data['title'])
             serializer = StudySerializer(study, many=True)
 
         else:
-            print("zxcv")
+            print("타이틀 없다")
             study = Study.objects.all()
             serializer = StudySerializer(study, many=True)
 
-        print(f"왜 두개일까 {serializer}")
         return serializer
 
     @swagger_auto_schema(
@@ -71,6 +70,7 @@ class StudyList(APIView):
     )
     def post(self, request):
         user_payload = jwt_get_payload(request)
+        request.data['study_members_count'] = 1
         serializer = StudyAddSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

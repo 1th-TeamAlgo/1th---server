@@ -5,4 +5,4 @@ from ..models import Study
 class StudyAddSerializer(serializers.ModelSerializer):
     class Meta:
         model = Study
-        fields = ['study_id', 'category', 'title', 'limit', 'description', 'study_image', ]
+        fields = ['study_id', 'category', 'title', 'limit', 'study_members_count', 'description', 'study_image', ]

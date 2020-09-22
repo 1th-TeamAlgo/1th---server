@@ -10,6 +10,7 @@ class Study(models.Model):
     study_image = models.FileField(blank=True, null=True)
     category = models.CharField(max_length=200)
     study_members = models.ManyToManyField(User, through='StudyMember')
+    study_members_count = models.IntegerField(default=0)
     title = models.CharField(max_length=50)
     limit = models.IntegerField()
     description = models.CharField(max_length=200)

@@ -43,7 +43,4 @@ urlpatterns = [
     path('studies/<int:studies_id>/pictures', StudyActivity_pictures.as_view()),
     path('studies/<int:studies_id>/pictures/<int:activity_pictures_id>',StudyActivityPicturesDetail.as_view()),
 
-    ## activity_pictures(Update 필요) ##
-    # path('activity-pictures', activity_picture_views.APList.as_view()),
-    # path('activity-pictures/<int:pk>', activity_picture_views.APDetail.as_view()),
 ]

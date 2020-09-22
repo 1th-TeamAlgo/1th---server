@@ -5,7 +5,7 @@ from ...study_member.serializers.study_member_sz import StudyMemberSerializer
 from ...study_member.serializers.study_member_delete_sz import StudyMemberDeleteSerializer
 from ...study_member.models import StudyMember
 
-from ...user.models import User
+from ...study.models import Study
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -27,7 +27,7 @@ class Study_StudyMemberDetail(APIView):
     )
     def get(self, request, *args, **kwargs):
         study_member = get_object_or_404(StudyMember, study_member_id=self.kwargs['study_members_id'],
-                                       study=self.kwargs['studies_id'])
+                                         study=self.kwargs['studies_id'])
         serializer = StudyMemberSerializer(study_member)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -45,7 +45,7 @@ class Study_StudyMemberDetail(APIView):
     )
     def put(self, request, *args, **kwargs):
         study_member = get_object_or_404(StudyMember, study_member_id=self.kwargs['study_members_id'],
-                                       study=self.kwargs['studies_id'])
+                                         study=self.kwargs['studies_id'])
 
         serializer = StudyMemberSerializer(study_member, data=request.data)
 
@@ -67,12 +67,23 @@ class Study_StudyMemberDetail(APIView):
     def delete(self, request, *args, **kwargs):
         user_payload = jwt_get_payload(request)
 
-        user_is_manager = get_object_or_404(StudyMember, study=self.kwargs['studies_id'], user=user_payload['user_id'])
-        if hasattr(user_is_manager, 'is_manager') is not None and getattr(user_is_manager , 'is_manager') is True:
+        if self.user_is_manager(user_id=user_payload['user_id'], studies_id=self.kwargs['studies_id']):
             study_member = get_object_or_404(StudyMember, study_member_id=self.kwargs['study_members_id'],
                                              study=self.kwargs['studies_id'])
             serializer = StudyMemberDeleteSerializer(study_member)
             study_member.delete()
+
+            study = get_object_or_404(Study, pk=self.kwargs['studies_id'])
+            study.study_members_count -= 1
+            study.save()
+
             return Response(data=serializer.data)
         else:
             return Response(data=['관리자가 아닙니다'])
+
+    def user_is_manager(self, studies_id, user_id):
+        is_manager = get_object_or_404(StudyMember, study=studies_id, user=user_id)
+        if hasattr(is_manager, 'is_manager') is not None and getattr(is_manager, 'is_manager') is True:
+            return True
+        else:
+            return False
