@@ -29,37 +29,42 @@ class StudyMemberConfirm(APIView):
     )
     ## study 가입 신청 멤버 승인
     def post(self, request, *args, **kwargs):
+        user_payload = jwt_get_payload(request)
         study_id = self.kwargs['studies_id']
-        str_study_id = self.str_study_id(study_id)
 
-        user_id = request.POST.get('user_id')
-        user = get_object_or_404(User, pk=user_id)
+        if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
+            str_study_id = self.str_study_id(study_id)
 
-        self.apply_member_delete_redis(str_study_id, user_id)
+            user_id = request.POST.get('user_id')
+            user = get_object_or_404(User, pk=user_id)
 
-        if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
-            return Response(data=["이미 들어있다"])
+            self.apply_member_delete_redis(str_study_id, user_id)
 
-        study = get_object_or_404(Study, pk=study_id)
-        study.study_members_count += 1
-        study.save()
+            if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
+                return Response(data=["이미 들어있다"])
 
-        study_member_data = {
-            'study': study_id,
-            'user': user_id,
-            'is_manager': False,
-        }
+            study = get_object_or_404(Study, pk=study_id)
+            study.study_members_count += 1
+            study.save()
 
-        study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
+            study_member_data = {
+                'study': study_id,
+                'user': user_id,
+                'is_manager': False,
+            }
 
-        if study_member_serializer.is_valid():
-            study_member_serializer.save()
+            study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
 
-        study_members = get_object_or_404(Study, pk=study_id)
-        study_members_serializer = MemberOfStudySerializer(study_members)
-        #return Response(study_members_serializer.data)
+            if study_member_serializer.is_valid():
+                study_member_serializer.save()
 
-        return Response(data=[])
+            study_members = get_object_or_404(Study, pk=study_id)
+            study_members_serializer = MemberOfStudySerializer(study_members)
+            #return Response(study_members_serializer.data)
+
+            return Response(data=[])
+        else:
+            return Response(data=['관리자가 아닙니다'])
 
     @swagger_auto_schema(
         tags=['studies'],
@@ -111,6 +116,7 @@ class StudyMemberConfirm(APIView):
 
     def user_is_manager(self, studies_id, user_id):
         is_manager = get_object_or_404(StudyMember, study=studies_id, user=user_id)
+        print(is_manager)
         if hasattr(is_manager, 'is_manager') is not None and getattr(is_manager, 'is_manager') is True:
             return True
         else:
