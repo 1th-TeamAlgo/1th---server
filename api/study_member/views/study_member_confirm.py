@@ -99,8 +99,9 @@ class StudyMemberConfirm(APIView):
                 delete_index = i
                 break
 
-        study_apply_lists.pop(delete_index)
-        cache.set(study_id, study_apply_lists)
+        if len(study_apply_lists) > 0:
+            study_apply_lists.pop(delete_index)
+            cache.set(study_id, study_apply_lists)
 
         return study_apply_lists
 

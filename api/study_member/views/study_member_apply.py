@@ -103,6 +103,11 @@ class StudyMemberApply(APIView):
         else:
             print("else")
             study_apply_list = list(apply_data)
+
+            ## 이미 가입 신청한 적이 있는지 확인 해야됨
+            print("if ")
+            if self.apply_check(study_apply_list,user_payload['user_id']):
+                return Response(data=['이미 가입 신청을 했습니다'])
             study_apply_list.append(self.get_user_data(user))
             cache.set(str_study_id, study_apply_list, self.redis_data_expire_time)
 
@@ -124,3 +129,11 @@ class StudyMemberApply(APIView):
 
     def str_study_id(self, study_id):
         return 'study:' + str(study_id)
+
+    def apply_check(self, study_apply_lists, user_id):
+        for study_apply_list in study_apply_lists:
+            if hasattr(study_apply_list, 'user_id') is not None and study_apply_list['user_id'] == user_id:
+                return True
+
+        return False
+
