@@ -88,14 +88,19 @@ class StudyMemberConfirm(APIView):
 
     ## 가입 승인 또는 반려 된 인원 redis에서 제거
     def apply_member_delete_redis(self, study_id, user_id):
-        study_apply_dict = cache.get(study_id)
+        study_apply_lists = cache.get(study_id)
 
-        if int(user_id) in study_apply_dict.keys():
-            study_apply_dict.pop(int(user_id))
-            cache.set(study_id, study_apply_dict)
-            print(study_apply_dict)
+        delete_index = 0
+        for i, study_apply_list in enumerate(study_apply_lists):
+            if hasattr(study_apply_list, 'user_id') is not None and study_apply_list['user_id'] == user_id:
+                delete_index = i
+                break
 
-        return study_apply_dict
+        study_apply_lists.pop(delete_index)
+        cache.set(study_id, study_apply_lists)
+
+        return study_apply_lists
+
 
     def str_study_id(self, study_id):
         return 'study:' + str(study_id)
