@@ -35,8 +35,8 @@ class StudyMemberApply(APIView):
         {
             "code": 200,
             "status": "OK",
-            "message": {
-                "2": {
+            "message": [
+                {
                     "user_id": 2,
                     "user_name": "김택윤",
                     "user_age": null,
@@ -44,7 +44,7 @@ class StudyMemberApply(APIView):
                     "user_description": null,
                     "user_category": null
                 },
-                "1": {
+                {
                     "user_id": 1,
                     "user_name": "이운기",
                     "user_age": 29,
@@ -52,7 +52,7 @@ class StudyMemberApply(APIView):
                     "user_description": "안드",
                     "user_category": null
                 }
-            }
+            ]
         }
         ```
         """,
