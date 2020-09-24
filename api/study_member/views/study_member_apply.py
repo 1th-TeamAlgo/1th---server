@@ -15,7 +15,7 @@ from django.core.cache import cache
 # /api/v1/studies/<int:studies_id>/members/apply
 class StudyMemberApply(APIView):
     def __init__(self):
-        self.redis_data_expire_time = 25200
+        self.redis_data_expire_time = 252000
 
     ## 스터디 가입 리스트 확인 api
     @swagger_auto_schema(
@@ -97,13 +97,14 @@ class StudyMemberApply(APIView):
 
         if apply_data is None:
             print("if")
-            cache.set(str_study_id, {user.user_id: self.get_user_data(user)}, self.redis_data_expire_time)
+            apply_data = [self.get_user_data(user)]
+            cache.set(str_study_id, apply_data, self.redis_data_expire_time)
 
         else:
             print("else")
-            study_apply_dict = apply_data
-            study_apply_dict[user.user_id] = self.get_user_data(user)
-            cache.set(str_study_id, study_apply_dict, self.redis_data_expire_time)
+            study_apply_list = list(apply_data)
+            study_apply_list.append(self.get_user_data(user))
+            cache.set(str_study_id, study_apply_list, self.redis_data_expire_time)
 
         apply_data = cache.get(str_study_id)
 
