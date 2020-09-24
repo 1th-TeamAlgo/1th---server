@@ -57,7 +57,9 @@ class StudyMemberConfirm(APIView):
 
         study_members = get_object_or_404(Study, pk=study_id)
         study_members_serializer = MemberOfStudySerializer(study_members)
-        return Response(study_members_serializer.data)
+        #return Response(study_members_serializer.data)
+
+        return Response(data=[])
 
     @swagger_auto_schema(
         tags=['studies'],
@@ -79,9 +81,10 @@ class StudyMemberConfirm(APIView):
 
             user_id = request.POST.get('user_id')
 
-            study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
-
-            return Response(data=study_apply_dict)
+            #study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
+            #return Response(data=study_apply_dict)
+            self.apply_member_delete_redis(str_study_id, user_id)
+            return Response(data=[])
 
         else:
             return Response(data=['관리자가 아닙니다'])
