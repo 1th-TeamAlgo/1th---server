@@ -55,14 +55,16 @@ class StudyMemberConfirm(APIView):
 
             study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
 
+            flag = "False"
             if study_member_serializer.is_valid():
+                flag = "True"
                 study_member_serializer.save()
 
-            study_members = get_object_or_404(Study, pk=study_id)
-            study_members_serializer = MemberOfStudySerializer(study_members)
+            #study_members = get_object_or_404(Study, pk=study_id)
+            #study_members_serializer = MemberOfStudySerializer(study_members)
             #return Response(study_members_serializer.data)
 
-            return Response(data=[])
+            return Response(data=[flag])
         else:
             return Response(data=['관리자가 아닙니다'])
 
