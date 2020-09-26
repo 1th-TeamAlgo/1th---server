@@ -65,7 +65,7 @@ class StudyMemberConfirm(APIView):
             # study_members_serializer = MemberOfStudySerializer(study_members)
             # return Response(study_members_serializer.data)
 
-            return Response(data={'request_data': request.data, 'flag': flag, 'study_id': study_id, 'user_id': user_id})
+            return Response(data=[request.data,flag,study_id,user_id])
         else:
             return Response(data=['관리자가 아닙니다'])
 
