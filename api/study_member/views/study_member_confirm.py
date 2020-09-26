@@ -44,7 +44,7 @@ class StudyMemberConfirm(APIView):
                 user_id = request_data['user_id']
 
             except Exception as e:
-                return Response(data=[])
+                return Response(data=[str(request_data) , str(request.body)])
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
