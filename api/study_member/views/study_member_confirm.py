@@ -36,8 +36,12 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            print(request.data)
-            user_id = request.data['user_id']
+            try:
+                user_id = request.data['user_id']
+                print(type(user_id))
+
+            except:
+                return Response(data=['유저 아이디 에러'])
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
