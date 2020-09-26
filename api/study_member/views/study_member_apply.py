@@ -113,7 +113,8 @@ class StudyMemberApply(APIView):
 
         apply_data = cache.get(str_study_id)
 
-        return Response(data=apply_data)
+        #return Response(data=apply_data)
+        return Response(data=[])
 
     def get_user_data(self, user) -> dict:
         user_data = dict(
