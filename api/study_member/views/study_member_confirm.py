@@ -16,6 +16,7 @@ from django.core.cache import cache
 
 from lib.user_data import jwt_get_payload
 
+import json
 
 class StudyMemberConfirm(APIView):
     @swagger_auto_schema(
@@ -33,11 +34,13 @@ class StudyMemberConfirm(APIView):
         user_payload = jwt_get_payload(request)
         study_id = self.kwargs['studies_id']
 
+        request_data = json.loads(request.body.decode("utf-8"))
+        print(request_data)
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
             try:
-                user_id = request.data['user_id']
+                user_id = request_data['user_id']
                 print(type(user_id))
 
             except:
