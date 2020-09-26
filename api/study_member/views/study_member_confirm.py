@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 
 from ...user.models import User
+from ...user.serializers.user_id_sz import UserIdSerializer
 from ...study.models import Study
 from ..models import StudyMember
 
@@ -34,17 +35,13 @@ class StudyMemberConfirm(APIView):
         user_payload = jwt_get_payload(request)
         study_id = self.kwargs['studies_id']
 
-        request_data = json.loads(request.body.decode("utf-8"))
-        print(request_data)
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            try:
-                user_id = request_data['user_id']
-                print(type(user_id))
+            request_data = json.loads(request.body)
+            print(request_data)
 
-            except:
-                return Response(data=['유저 아이디 에러'])
+            user_id = request_data['user_id']
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
