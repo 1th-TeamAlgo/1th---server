@@ -36,7 +36,7 @@ class StudyMemberConfirm(APIView):
             str_study_id = self.str_study_id(study_id)
 
             user_id = request.POST.get('user_id')
-            user = get_object_or_404(User, pk=user_id)
+
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
