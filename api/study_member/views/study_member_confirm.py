@@ -49,7 +49,7 @@ class StudyMemberConfirm(APIView):
 
             study_member_data = {
                 'study': study_id,
-                'user': user_id,
+                'user': int(user_id),
                 'is_manager': False,
             }
 
