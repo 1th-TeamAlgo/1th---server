@@ -19,6 +19,7 @@ from lib.user_data import jwt_get_payload
 
 import json
 
+
 class StudyMemberConfirm(APIView):
     @swagger_auto_schema(
         tags=['studies'],
@@ -38,10 +39,12 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            request_data = json.loads(request.body)
-            print(request_data)
+            try:
+                request_data = json.loads(request.body)
+                user_id = request_data['user_id']
 
-            user_id = request_data['user_id']
+            except Exception as e:
+                return Response(data=[e])
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
