@@ -61,6 +61,7 @@ class StudyMemberConfirm(APIView):
                 'is_manager': False,
             }
 
+            study_member_data =
             print(request.data)
             study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
 
@@ -95,7 +96,7 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            user_id = request.data['user_id']
+            user_id = request.POST.get('user_id')
 
             # study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
             # return Response(data=study_apply_dict)
