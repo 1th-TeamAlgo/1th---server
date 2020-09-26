@@ -61,7 +61,7 @@ class StudyMemberConfirm(APIView):
                 'is_manager': False,
             }
 
-            study_member_data =
+            study_member_data = json.loads(study_member_data)
             print(request.data)
             study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
 
