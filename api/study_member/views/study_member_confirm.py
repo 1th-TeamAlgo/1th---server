@@ -16,6 +16,7 @@ from django.core.cache import cache
 
 from lib.user_data import jwt_get_payload
 
+
 class StudyMemberConfirm(APIView):
     @swagger_auto_schema(
         tags=['studies'],
@@ -37,7 +38,6 @@ class StudyMemberConfirm(APIView):
 
             user_id = request.POST.get('user_id')
 
-
             self.apply_member_delete_redis(str_study_id, user_id)
 
             if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
@@ -53,6 +53,7 @@ class StudyMemberConfirm(APIView):
                 'is_manager': False,
             }
 
+            print(request.data)
             study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
 
             flag = "False"
@@ -60,11 +61,11 @@ class StudyMemberConfirm(APIView):
                 flag = "True"
                 study_member_serializer.save()
 
-            #study_members = get_object_or_404(Study, pk=study_id)
-            #study_members_serializer = MemberOfStudySerializer(study_members)
-            #return Response(study_members_serializer.data)
+            # study_members = get_object_or_404(Study, pk=study_id)
+            # study_members_serializer = MemberOfStudySerializer(study_members)
+            # return Response(study_members_serializer.data)
 
-            return Response(data=[flag])
+            return Response(data={'request_data': request.data, 'flag': flag, 'study_id': study_id, 'user_id': user_id})
         else:
             return Response(data=['관리자가 아닙니다'])
 
@@ -88,8 +89,8 @@ class StudyMemberConfirm(APIView):
 
             user_id = request.POST.get('user_id')
 
-            #study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
-            #return Response(data=study_apply_dict)
+            # study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
+            # return Response(data=study_apply_dict)
             self.apply_member_delete_redis(str_study_id, user_id)
             return Response(data=[])
 
@@ -111,7 +112,6 @@ class StudyMemberConfirm(APIView):
             cache.set(study_id, study_apply_lists)
 
         return study_apply_lists
-
 
     def str_study_id(self, study_id):
         return 'study:' + str(study_id)
