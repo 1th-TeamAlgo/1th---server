@@ -26,12 +26,13 @@ class StudyMemberConfirm(APIView):
     )
     ## study 가입 신청 멤버 승인
     def post(self, request, *args, **kwargs):
+        print("안들어오누")
         user_payload = jwt_get_payload(request)
         study_id = self.kwargs['studies_id']
 
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
-            user_id = request.POST.get('user_id')
+            user_id = request.data.get('user_id')
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
@@ -69,7 +70,7 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            user_id = request.POST.get('user_id')
+            user_id = request.data.get('user_id')
 
             # study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
             # return Response(data=study_apply_dict)
