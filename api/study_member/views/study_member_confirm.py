@@ -36,6 +36,7 @@ class StudyMemberConfirm(APIView):
         user_payload = jwt_get_payload(request)
         study_id = self.kwargs['studies_id']
 
+
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
@@ -44,35 +45,20 @@ class StudyMemberConfirm(APIView):
                 user_id = request_data['user_id']
 
             except Exception as e:
-                return Response(data=[str(request_data) , str(request.body)])
+                return Response(data=[str(request_data), str(request.body)])
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
             if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
                 return Response(data=["이미 들어있다"])
 
+            user = get_object_or_404(User, pk=user_id)
             study = get_object_or_404(Study, pk=study_id)
             study.study_members_count += 1
             study.save()
 
-            study_member_data = {
-                'study': study_id,
-                'user': int(user_id),
-                'is_manager': False,
-            }
-
-            study_member_data = json.loads(study_member_data)
-            print(request.data)
-            study_member_serializer = StudyAddStudyMemberSerializer(data=study_member_data)
-
-            flag = "False"
-            if study_member_serializer.is_valid():
-                flag = "True"
-                study_member_serializer.save()
-
-            # study_members = get_object_or_404(Study, pk=study_id)
-            # study_members_serializer = MemberOfStudySerializer(study_members)
-            # return Response(study_members_serializer.data)
+            new_study_member = StudyMember(study=study, user=user, is_manager=False)
+            new_study_member.save()
 
             return Response(data=[])
         else:
