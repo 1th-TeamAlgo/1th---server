@@ -35,6 +35,7 @@ class StudyMemberConfirm(APIView):
             str_study_id = self.str_study_id(study_id)
 
             data = json.loads(request.body)
+            print(data)
             user_id = data['user_id']
 
             print(user_id)
@@ -50,7 +51,7 @@ class StudyMemberConfirm(APIView):
             study.save()
 
             new_study_member = StudyMember(study=study, user=user, is_manager=False)
-            new_study_member.save()
+            #new_study_member.save()
 
             return Response(data=[])
         else:
@@ -75,8 +76,8 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            data = json.loads(request.body)
-            user_id = data['user_id']
+            user_id = request.POST.get('user_id')
+            print(user_id)
             # study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
             # return Response(data=study_apply_dict)
             self.apply_member_delete_redis(str_study_id, user_id)
