@@ -2,13 +2,8 @@ from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 
 from ...user.models import User
-from ...user.serializers.user_id_sz import UserIdSerializer
 from ...study.models import Study
 from ..models import StudyMember
-
-from ..serializers.study_add_study_member_sz import StudyAddStudyMemberSerializer
-
-from ...study.serializers.member_of_study_sz import MemberOfStudySerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,8 +11,6 @@ from rest_framework.views import APIView
 from django.core.cache import cache
 
 from lib.user_data import jwt_get_payload
-
-import json
 
 
 class StudyMemberConfirm(APIView):
@@ -36,16 +29,9 @@ class StudyMemberConfirm(APIView):
         user_payload = jwt_get_payload(request)
         study_id = self.kwargs['studies_id']
 
-
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
-
-            try:
-                request_data = json.loads(request.body)
-                user_id = request_data['user_id']
-
-            except Exception as e:
-                return Response(data=[str(request_data), str(request.body)])
+            user_id = request.POST.get('user_id')
 
             self.apply_member_delete_redis(str_study_id, user_id)
 
@@ -53,6 +39,7 @@ class StudyMemberConfirm(APIView):
                 return Response(data=["이미 들어있다"])
 
             user = get_object_or_404(User, pk=user_id)
+
             study = get_object_or_404(Study, pk=study_id)
             study.study_members_count += 1
             study.save()
