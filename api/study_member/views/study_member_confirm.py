@@ -34,11 +34,9 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            data = json.loads(request.body)
-            print(data)
-            user_id = data['user_id']
-
-            print(user_id)
+            user_id = str(request.POST.get('user_id'))
+            user_id = request.data.get('user_id')
+            print(f'------------------{user_id} ------------------')
             self.apply_member_delete_redis(str_study_id, user_id)
 
             if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
@@ -51,7 +49,7 @@ class StudyMemberConfirm(APIView):
             study.save()
 
             new_study_member = StudyMember(study=study, user=user, is_manager=False)
-            #new_study_member.save()
+            new_study_member.save()
 
             return Response(data=[])
         else:
