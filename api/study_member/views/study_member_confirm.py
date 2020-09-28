@@ -32,13 +32,14 @@ class StudyMemberConfirm(APIView):
 
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
-            user_id = request.data.get('user_id')
-
+            user_id = request.POST.get('user_id')
+            print(user_id)
             self.apply_member_delete_redis(str_study_id, user_id)
 
             if len(StudyMember.objects.filter(study_id=study_id, user_id=user_id)) > 0:
                 return Response(data=["이미 들어있다"])
 
+            print(user_id)
             user = get_object_or_404(User, pk=user_id)
 
             study = get_object_or_404(Study, pk=study_id)
@@ -70,7 +71,7 @@ class StudyMemberConfirm(APIView):
         if self.user_is_manager(user_id=user_payload['user_id'], studies_id=study_id):
             str_study_id = self.str_study_id(study_id)
 
-            user_id = request.data.get('user_id')
+            user_id = request.POST.get('user_id')
 
             # study_apply_dict = self.apply_member_delete_redis(str_study_id, user_id)
             # return Response(data=study_apply_dict)
