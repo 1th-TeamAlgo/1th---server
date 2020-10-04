@@ -1,5 +1,8 @@
 ﻿# "슬기로운 공부생활" 서버 파트 저장소
 
+### API Document
+- http://ec2-3-34-134-147.ap-northeast-2.compute.amazonaws.com/docs
+
 ### 목적 및 소개
 ```
 "슬기로운 공부생활"은 스터디 모임을 운영하고 있었던 학생들이 스터디 모임 문화를 더욱 활성화 시켜보자는 아이디어로 출발한 프로젝트 입니다.
@@ -29,5 +32,4 @@
 ---
 
 
-### API Document
-- http://ec2-3-34-134-147.ap-northeast-2.compute.amazonaws.com/docs
+
