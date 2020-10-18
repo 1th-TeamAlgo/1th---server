@@ -15,7 +15,7 @@ from django.core.cache import cache
 # /api/v1/studies/<int:studies_id>/members/apply
 class StudyMemberApply(APIView):
     def __init__(self):
-        self.redis_data_expire_time = 25200
+        self.redis_data_expire_time = 252000
 
     ## 스터디 가입 리스트 확인 api
     @swagger_auto_schema(
@@ -23,18 +23,20 @@ class StudyMemberApply(APIView):
         tags=['studies'],
         operation_description=
         """
-        특정 id를 가진 스터디 회원 조회 API
-
+        스터디에 가입 신청한 인원 리스트 확인    
         ---
-            request_parmas : studies_id
+            Header : x-jwt-token
+        ---
+            request_parmas
+                - studies_id : 리스트 확인할 스터디의 id
         ---
         ```json
         response 
         {
             "code": 200,
             "status": "OK",
-            "message": {
-                "2": {
+            "message": [
+                {
                     "user_id": 2,
                     "user_name": "김택윤",
                     "user_age": null,
@@ -42,7 +44,7 @@ class StudyMemberApply(APIView):
                     "user_description": null,
                     "user_category": null
                 },
-                "1": {
+                {
                     "user_id": 1,
                     "user_name": "이운기",
                     "user_age": 29,
@@ -50,7 +52,7 @@ class StudyMemberApply(APIView):
                     "user_description": "안드",
                     "user_category": null
                 }
-            }
+            ]
         }
         ```
         """,
@@ -68,6 +70,19 @@ class StudyMemberApply(APIView):
 
         return Response(data=study_apply_list)
 
+    @swagger_auto_schema(
+        tags=['studies'],
+        operation_description=
+        """
+        스터디에 가입 신청 하기 
+        ---
+            Header : x-jwt-token
+        ---
+            request_body
+                - user_id : 스터디 가입 신청할 유저 id
+        """,
+    )
+
     # 스터디에 가입 하기 신청 api
     def post(self, request, *args, **kwargs):
         user_payload = jwt_get_payload(request)
@@ -82,17 +97,24 @@ class StudyMemberApply(APIView):
 
         if apply_data is None:
             print("if")
-            cache.set(str_study_id, {user.user_id: self.get_user_data(user)}, self.redis_data_expire_time)
+            apply_data = [self.get_user_data(user)]
+            cache.set(str_study_id, apply_data, self.redis_data_expire_time)
 
         else:
             print("else")
-            study_apply_dict = apply_data
-            study_apply_dict[user.user_id] = self.get_user_data(user)
-            cache.set(str_study_id, study_apply_dict, self.redis_data_expire_time)
+            study_apply_list = list(apply_data)
+
+            ## 이미 가입 신청한 적이 있는지 확인 해야됨
+            print("if ")
+            if self.apply_check(study_apply_list,user_payload['user_id']):
+                return Response(data=['이미 가입 신청을 했습니다'])
+            study_apply_list.append(self.get_user_data(user))
+            cache.set(str_study_id, study_apply_list, self.redis_data_expire_time)
 
         apply_data = cache.get(str_study_id)
 
-        return Response(data=apply_data)
+        #return Response(data=apply_data)
+        return Response(data=[])
 
     def get_user_data(self, user) -> dict:
         user_data = dict(
@@ -108,3 +130,11 @@ class StudyMemberApply(APIView):
 
     def str_study_id(self, study_id):
         return 'study:' + str(study_id)
+
+    def apply_check(self, study_apply_lists, user_id):
+        for study_apply_list in study_apply_lists:
+            if hasattr(study_apply_list, 'user_id') is not None and study_apply_list['user_id'] == user_id:
+                return True
+
+        return False
+

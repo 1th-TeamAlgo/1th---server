@@ -3,7 +3,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import ActivityPicture
-from .serializers import ActivityPictureSerializer
+from .serializersasdf import ActivityPictureSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -19,8 +19,10 @@ class APList(APIView):
 
         """,
     )
-    def get(self, request):
-        ap = ActivityPicture.objects.all()
+    def get(self, request, *args, **kwargs):
+        study_id = self.kwargs['studies_id']
+        ap = ActivityPicture.objects.filter(study_id=study_id)
+        #ap = ActivityPicture.objects.all()
         serializer = ActivityPictureSerializer(ap,many=True)
         return Response(serializer.data)
 

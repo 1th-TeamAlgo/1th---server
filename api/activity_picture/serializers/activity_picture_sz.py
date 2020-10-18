@@ -1,17 +1,15 @@
 from drf_yasg import openapi
 from rest_framework import serializers
-from .models import ActivityPicture
+from ..models import ActivityPicture
 
 
 class ActivityPictureSerializer(serializers.ModelSerializer):
-    # study = StudySerializer(read_only=True)
-
     class Meta:
         model = ActivityPicture
-        fields = ['activity_picture_id', 'study', 'path', ]
+        fields = ['study', 'activity_picture_id', 'activity_picture', 'create_at', 'update_at', ]
 
 
 class ActivityPictureDeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityPicture
-        fields = ['study', 'path', ]
+        fields = '__all__'

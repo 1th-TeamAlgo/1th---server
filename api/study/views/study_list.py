@@ -28,22 +28,25 @@ class StudyList(APIView):
         tags=['studies'],
         operation_description=
         """
-            스터디 그룹 조회 API
+        스터디 그룹 조회 API
+        ---
+            request_params
+                - title : 검색할 스터디의 이름
         """,
     )
     def get(self, request):
         get_data = request.query_params
         serializer = self.get_serializer(get_data=get_data)
-
-        print(f"serializer -> {serializer}")
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data)
 
     def get_serializer(self, get_data):
-        if 'title' in get_data:
+        if get_data.get('title') is not None:
+            print("타이틀 있다")
             study = Study.objects.filter(title__contains=get_data['title'])
             serializer = StudySerializer(study, many=True)
 
         else:
+            print("타이틀 없다")
             study = Study.objects.all()
             serializer = StudySerializer(study, many=True)
 
@@ -56,9 +59,8 @@ class StudyList(APIView):
         operation_description=
         """
         스터디 그룹 생성 API
-
         ---
-            요청사양
+            request_body
                 - study_image : 스터디 이미지
                 - category : 카테고리 이름
                 - title : 스터디 이름
@@ -68,6 +70,7 @@ class StudyList(APIView):
     )
     def post(self, request):
         user_payload = jwt_get_payload(request)
+        request.data['study_members_count'] = 1
         serializer = StudyAddSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

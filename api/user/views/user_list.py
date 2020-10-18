@@ -17,14 +17,9 @@ class UserList(APIView):
         tags=['users'],
         operation_description=
         """
-            회원 조회 API 
-
-            - 회원의 JWT를 이용하여 회원의 정보를 조회 합니다.
-
+        회원 조회 API - 회원의 JWT를 이용하여 회원의 정보를 조회 합니다.
         ---
-
             Header : x-jwt-token
-
         ---
         """,
     )
@@ -40,9 +35,7 @@ class UserList(APIView):
         tags=['users'],
         operation_description=
         """
-            특정 id를 가진 회원 수정 API (patch)
-            patch 특성은 하나의 필드만 수정해도 가능하다는 것이다.
-
+        특정 id를 가진 회원 수정 API (patch) - patch 특성은 하나의 필드만 수정해도 가능하다는 것이다.
         ---
 
             kakao_profile_img 는 카카오의 프로필 사진의 링크 이고

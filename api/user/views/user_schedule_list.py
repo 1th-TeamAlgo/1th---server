@@ -17,8 +17,7 @@ class UserScheduleList(APIView):
         tags=['users'],
         operation_description=
         """
-            특정 날짜에 있는 나의 스터디 스케쥴 API
-
+        특정 날짜에 있는 나의 스터디 스케쥴 API
         ---
             Header : x-jwt-token
         ---

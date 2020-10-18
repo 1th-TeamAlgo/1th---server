@@ -15,7 +15,7 @@ class StudyDetail(APIView):
         operation_description=
         """
         특정 id를 가진 스터디 그룹 조회 API
-
+        ---
         """,
     )
     def get(self, request, *args, **kwargs):

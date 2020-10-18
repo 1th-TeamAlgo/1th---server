@@ -16,7 +16,9 @@ class StudyMemberList(APIView):
         operation_description=
         """
         스터디 회원 조회 API
-
+        ---
+            Header : x-jwt-token
+        ---
         """,
     )
     def get(self, request):
@@ -31,7 +33,8 @@ class StudyMemberList(APIView):
         operation_description=
         """
         스터디 회원 생성 API
-
+        ---
+            Header : x-jwt-token
         ---
             request_body
                 -is_manager : 운영진인지 아닌지 구분  

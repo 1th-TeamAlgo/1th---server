@@ -22,7 +22,9 @@ class Study_StudyMember(APIView):
         operation_description=
         """
         스터디 그룹의 특정 id를 가진 스터디 회원 조회 API
-
+        ---
+            Header : x-jwt-token
+        ---
         """,
     )
     def get(self, request, *args, **kwargs):
@@ -36,7 +38,6 @@ class Study_StudyMember(APIView):
         tags=['StudyMember'],
         operation_description=
         """
-
         스터디 회원 생성 API
         ---
             Header : x-jwt-token
